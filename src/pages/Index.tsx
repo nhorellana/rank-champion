@@ -12,7 +12,7 @@ import { Project } from "@/types/contest";
 import { Trophy, Users, Star, BarChart3, Target, Lightbulb } from "lucide-react";
 
 const Index = () => {
-  const { projects, judges, scores, updateScore, getProjectScores } = useContestData();
+  const { projects, judges, scores, loading, updateScore, getProjectScores } = useContestData();
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
 
@@ -33,6 +33,17 @@ const Index = () => {
 
   const topProject = projectScores[0];
   const winningProject = projects.find(p => p.id === topProject?.projectId);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Loading contest data...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">

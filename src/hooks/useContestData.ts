@@ -1,26 +1,97 @@
-import { useState, useCallback } from 'react';
-import { Project, Score, ProjectScore } from '@/types/contest';
-import { mockProjects, mockScores, mockJudges } from '@/data/mockData';
+import { useState, useCallback, useEffect } from 'react';
+import { Project, Score, ProjectScore, Judge } from '@/types/contest';
+import { supabase } from '@/integrations/supabase/client';
 
 export const useContestData = () => {
-  const [projects] = useState<Project[]>(mockProjects);
-  const [judges] = useState(mockJudges);
-  const [scores, setScores] = useState<Score[]>(mockScores);
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [judges, setJudges] = useState<Judge[]>([]);
+  const [scores, setScores] = useState<Score[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const updateScore = useCallback((updatedScore: Score) => {
-    setScores(prevScores => {
-      const existingIndex = prevScores.findIndex(
-        s => s.projectId === updatedScore.projectId && s.judgeId === updatedScore.judgeId
-      );
-      
-      if (existingIndex >= 0) {
-        const newScores = [...prevScores];
-        newScores[existingIndex] = { ...updatedScore, lastUpdated: new Date().toISOString() };
-        return newScores;
-      } else {
-        return [...prevScores, { ...updatedScore, lastUpdated: new Date().toISOString() }];
+  // Load data from Supabase
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        // Load projects
+        const { data: projectsData } = await supabase
+          .from('projects')
+          .select('*')
+          .order('submission_date', { ascending: false });
+
+        // Load judges
+        const { data: judgesData } = await supabase
+          .from('judges')
+          .select('*');
+
+        // Load scores
+        const { data: scoresData } = await supabase
+          .from('scores')
+          .select('*');
+
+        if (projectsData) {
+          setProjects(projectsData.map(p => ({
+            ...p,
+            proposedSolution: p.proposed_solution,
+            submissionDate: p.submission_date
+          })));
+        }
+        if (judgesData) setJudges(judgesData);
+        if (scoresData) {
+          setScores(scoresData.map(s => ({
+            projectId: s.project_id,
+            judgeId: s.judge_id,
+            categoryA: s.category_a,
+            categoryB: s.category_b,
+            categoryC: s.category_c,
+            categoryD: s.category_d,
+            lastUpdated: s.last_updated
+          })));
+        }
+      } catch (error) {
+        console.error('Error loading data:', error);
+      } finally {
+        setLoading(false);
       }
-    });
+    };
+
+    loadData();
+  }, []);
+
+  const updateScore = useCallback(async (updatedScore: Score) => {
+    try {
+      const { data, error } = await supabase
+        .from('scores')
+        .upsert({
+          project_id: updatedScore.projectId,
+          judge_id: updatedScore.judgeId,
+          category_a: updatedScore.categoryA,
+          category_b: updatedScore.categoryB,
+          category_c: updatedScore.categoryC,
+          category_d: updatedScore.categoryD,
+        }, { 
+          onConflict: 'project_id,judge_id'
+        })
+        .select();
+
+      if (error) throw error;
+
+      // Update local state
+      setScores(prevScores => {
+        const existingIndex = prevScores.findIndex(
+          s => s.projectId === updatedScore.projectId && s.judgeId === updatedScore.judgeId
+        );
+        
+        if (existingIndex >= 0) {
+          const newScores = [...prevScores];
+          newScores[existingIndex] = { ...updatedScore, lastUpdated: new Date().toISOString() };
+          return newScores;
+        } else {
+          return [...prevScores, { ...updatedScore, lastUpdated: new Date().toISOString() }];
+        }
+      });
+    } catch (error) {
+      console.error('Error updating score:', error);
+    }
   }, []);
 
   const getProjectScores = useCallback((): ProjectScore[] => {
@@ -63,6 +134,7 @@ export const useContestData = () => {
     projects,
     judges,
     scores,
+    loading,
     updateScore,
     getProjectScores,
     getScoreByJudgeAndProject
