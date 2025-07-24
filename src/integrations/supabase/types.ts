@@ -14,7 +14,120 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      judges: {
+        Row: {
+          avatar: string | null
+          created_at: string | null
+          expertise: string
+          id: string
+          name: string
+        }
+        Insert: {
+          avatar?: string | null
+          created_at?: string | null
+          expertise: string
+          id?: string
+          name: string
+        }
+        Update: {
+          avatar?: string | null
+          created_at?: string | null
+          expertise?: string
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
+      projects: {
+        Row: {
+          category: string
+          created_at: string | null
+          description: string
+          id: string
+          problem: string
+          proposed_solution: string
+          submission_date: string | null
+          tags: string[]
+          team: string[]
+          title: string
+        }
+        Insert: {
+          category: string
+          created_at?: string | null
+          description: string
+          id?: string
+          problem: string
+          proposed_solution: string
+          submission_date?: string | null
+          tags?: string[]
+          team?: string[]
+          title: string
+        }
+        Update: {
+          category?: string
+          created_at?: string | null
+          description?: string
+          id?: string
+          problem?: string
+          proposed_solution?: string
+          submission_date?: string | null
+          tags?: string[]
+          team?: string[]
+          title?: string
+        }
+        Relationships: []
+      }
+      scores: {
+        Row: {
+          category_a: number
+          category_b: number
+          category_c: number
+          category_d: number
+          created_at: string | null
+          id: string
+          judge_id: string | null
+          last_updated: string | null
+          project_id: string | null
+        }
+        Insert: {
+          category_a: number
+          category_b: number
+          category_c: number
+          category_d: number
+          created_at?: string | null
+          id?: string
+          judge_id?: string | null
+          last_updated?: string | null
+          project_id?: string | null
+        }
+        Update: {
+          category_a?: number
+          category_b?: number
+          category_c?: number
+          category_d?: number
+          created_at?: string | null
+          id?: string
+          judge_id?: string | null
+          last_updated?: string | null
+          project_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "scores_judge_id_fkey"
+            columns: ["judge_id"]
+            isOneToOne: false
+            referencedRelation: "judges"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "scores_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
