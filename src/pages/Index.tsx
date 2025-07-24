@@ -1,12 +1,187 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ProjectCard } from "@/components/ProjectCard";
+import { ProjectDetailModal } from "@/components/ProjectDetailModal";
+import { ScoringPanel } from "@/components/ScoringPanel";
+import { LeaderboardChart } from "@/components/LeaderboardChart";
+import { useContestData } from "@/hooks/useContestData";
+import { Project } from "@/types/contest";
+import { Trophy, Users, Star, BarChart3, Target, Lightbulb } from "lucide-react";
 
 const Index = () => {
+  const { projects, judges, scores, updateScore, getProjectScores } = useContestData();
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
+
+  const projectScores = getProjectScores();
+  const selectedProjectScore = selectedProject 
+    ? projectScores.find(ps => ps.projectId === selectedProject.id)
+    : null;
+
+  const handleViewDetails = (project: Project) => {
+    setSelectedProject(project);
+    setIsDetailModalOpen(true);
+  };
+
+  const closeDetailModal = () => {
+    setIsDetailModalOpen(false);
+    setSelectedProject(null);
+  };
+
+  const topProject = projectScores[0];
+  const winningProject = projects.find(p => p.id === topProject?.projectId);
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
+    <div className="min-h-screen bg-background">
+      {/* Header */}
+      <div className="border-b border-border/50 bg-card/30 backdrop-blur-sm sticky top-0 z-10">
+        <div className="container mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-innovation rounded-lg flex items-center justify-center">
+                <Lightbulb className="h-6 w-6 text-white" />
+              </div>
+              <div>
+                <h1 className="text-2xl font-bold text-foreground">Innovation Contest 2024</h1>
+                <p className="text-sm text-muted-foreground">Judge and track 15 innovative projects</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-4">
+              <div className="text-right">
+                <div className="text-sm text-muted-foreground">Total Projects</div>
+                <div className="text-xl font-bold text-primary">{projects.length}</div>
+              </div>
+              <div className="text-right">
+                <div className="text-sm text-muted-foreground">Judges</div>
+                <div className="text-xl font-bold text-innovation">{judges.length}</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+
+      <div className="container mx-auto px-6 py-8">
+        {/* Quick Stats */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+          <Card className="bg-gradient-to-br from-innovation/10 to-innovation-secondary/10 border-innovation/20">
+            <CardContent className="p-6">
+              <div className="flex items-center gap-4">
+                <Trophy className="h-8 w-8 text-innovation" />
+                <div>
+                  <p className="text-sm text-muted-foreground">Leading Project</p>
+                  <p className="text-lg font-semibold text-foreground">
+                    {winningProject?.title || "TBD"}
+                  </p>
+                  <p className="text-sm text-innovation">{topProject?.totalAverage || "0"} avg score</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardContent className="p-6">
+              <div className="flex items-center gap-4">
+                <Target className="h-8 w-8 text-primary" />
+                <div>
+                  <p className="text-sm text-muted-foreground">Categories</p>
+                  <p className="text-lg font-semibold text-foreground">4</p>
+                  <p className="text-sm text-primary">A, B, C, D</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardContent className="p-6">
+              <div className="flex items-center gap-4">
+                <Users className="h-8 w-8 text-success" />
+                <div>
+                  <p className="text-sm text-muted-foreground">Active Judges</p>
+                  <p className="text-lg font-semibold text-foreground">{judges.length}</p>
+                  <p className="text-sm text-success">All participating</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardContent className="p-6">
+              <div className="flex items-center gap-4">
+                <Star className="h-8 w-8 text-warning" />
+                <div>
+                  <p className="text-sm text-muted-foreground">Avg Score</p>
+                  <p className="text-lg font-semibold text-foreground">
+                    {(projectScores.reduce((sum, ps) => sum + ps.totalAverage, 0) / projectScores.length).toFixed(1)}
+                  </p>
+                  <p className="text-sm text-warning">Out of 10</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Main Content */}
+        <Tabs defaultValue="projects" className="space-y-6">
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="projects" className="flex items-center gap-2">
+              <Target className="h-4 w-4" />
+              Projects
+            </TabsTrigger>
+            <TabsTrigger value="scoring" className="flex items-center gap-2">
+              <Star className="h-4 w-4" />
+              Scoring
+            </TabsTrigger>
+            <TabsTrigger value="leaderboard" className="flex items-center gap-2">
+              <BarChart3 className="h-4 w-4" />
+              Leaderboard
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="projects" className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {projects.map((project) => {
+                const projectScore = projectScores.find(ps => ps.projectId === project.id);
+                return projectScore ? (
+                  <ProjectCard
+                    key={project.id}
+                    project={project}
+                    projectScore={projectScore}
+                    onViewDetails={handleViewDetails}
+                  />
+                ) : null;
+              })}
+            </div>
+          </TabsContent>
+
+          <TabsContent value="scoring">
+            <ScoringPanel
+              projects={projects}
+              judges={judges}
+              scores={scores}
+              onUpdateScore={updateScore}
+            />
+          </TabsContent>
+
+          <TabsContent value="leaderboard">
+            <LeaderboardChart
+              projectScores={projectScores}
+              projects={projects}
+            />
+          </TabsContent>
+        </Tabs>
+      </div>
+
+      <ProjectDetailModal
+        project={selectedProject}
+        projectScore={selectedProjectScore}
+        judges={judges}
+        scores={scores}
+        isOpen={isDetailModalOpen}
+        onClose={closeDetailModal}
+      />
     </div>
   );
 };
