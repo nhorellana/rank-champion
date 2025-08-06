@@ -43,19 +43,21 @@ export const ProjectDetailModal = ({
         <DialogHeader>
           <div className="flex items-center gap-3">
             <Trophy className={`h-6 w-6 ${getRankColor(projectScore.rank)}`} />
-            <div>
+            <div className="flex flex-col gap-1">
               <DialogTitle className="text-2xl">{project.title}</DialogTitle>
               <div className="flex items-center gap-2 mt-1">
                 <span className={`text-sm font-medium ${getRankColor(projectScore.rank)}`}>
                   Posición #{projectScore.rank}
                 </span>
-                <Badge variant="outline">{project.category}</Badge>
               </div>
+            </div>
+            <div className="flex self-end">
+              <Badge variant="outline">{project.category}</Badge>
             </div>
           </div>
         </DialogHeader>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-1 gap-6">
           {/* Project Info */}
           <div className="lg:col-span-2 space-y-6">
             <Card>
@@ -70,29 +72,16 @@ export const ProjectDetailModal = ({
                   <h4 className="font-semibold text-foreground mb-2">Descripción</h4>
                   <p className="text-muted-foreground">{project.description}</p>
                 </div>
-
                 <div className="flex items-center gap-4 text-sm text-muted-foreground">
                   <div className="flex items-center gap-1">
                     <Users className="h-4 w-4" />
                     <span>{project.team.join(", ")}</span>
                   </div>
-                  <div className="flex items-center gap-1">
-                    <Calendar className="h-4 w-4" />
-                    <span>{new Date(project.submissionDate).toLocaleDateString()}</span>
-                  </div>
                 </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <AlertCircle className="h-5 w-5 text-destructive" />
-                  Problema
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">{project.problem}</p>
+                <div>
+                  <h4 className="font-semibold text-foreground mb-2">Categoría</h4>
+                  <p className="text-muted-foreground">{project.problem}</p>
+                </div>
               </CardContent>
             </Card>
 
@@ -122,10 +111,7 @@ export const ProjectDetailModal = ({
                 </div>
               </CardContent>
             </Card>
-          </div>
 
-          {/* Scoring Panel */}
-          <div className="space-y-6">
             <Card>
               <CardHeader>
                 <CardTitle>Puntajes actuales</CardTitle>
@@ -155,7 +141,6 @@ export const ProjectDetailModal = ({
                 </div>
               </CardContent>
             </Card>
-
             <Card>
               <CardHeader>
                 <CardTitle>Puntajes de los jurados</CardTitle>

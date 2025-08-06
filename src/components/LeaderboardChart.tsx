@@ -71,25 +71,24 @@ export const LeaderboardChart = ({ projectScores, projects }: LeaderboardChartPr
                     </span>
                   </div>
                   <h3 className="font-semibold text-foreground mb-1">{project?.title}</h3>
-                  <Badge variant="secondary" className="mb-2">{project?.category}</Badge>
-                  <div className="text-2xl font-bold text-primary">{score.totalAverage}</div>
-                  <div className="text-xs text-muted-foreground">Puntaje promedio</div>
+                  <Badge variant="default" className="mb-2">{project?.category}</Badge>
+                  <div className="text-2xl font-bold text-primary">{score.totalAverage} / 10</div>
 
                   <div className="grid grid-cols-2 gap-1 mt-3 text-xs">
                     <div className="text-center">
-                      <div className="text-muted-foreground">A</div>
+                      <div className="text-muted-foreground">Viabilidad</div>
                       <div className="font-semibold">{score.averageA}</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-muted-foreground">B</div>
+                      <div className="text-muted-foreground">Potencial</div>
                       <div className="font-semibold">{score.averageB}</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-muted-foreground">C</div>
+                      <div className="text-muted-foreground">Equipo</div>
                       <div className="font-semibold">{score.averageC}</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-muted-foreground">D</div>
+                      <div className="text-muted-foreground">Innovación</div>
                       <div className="font-semibold">{score.averageD}</div>
                     </div>
                   </div>

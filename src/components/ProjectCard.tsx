@@ -48,11 +48,7 @@ export const ProjectCard = ({ project, projectScore, onViewDetails }: ProjectCar
           <div className="flex items-center gap-4 text-xs text-muted-foreground">
             <div className="flex items-center gap-1">
               <Users className="h-3 w-3" />
-              <span>{project.team.length} members</span>
-            </div>
-            <div className="flex items-center gap-1">
-              <Calendar className="h-3 w-3" />
-              <span>{new Date(project.submissionDate).toLocaleDateString()}</span>
+              <span>{project.team.length} miembros</span>
             </div>
           </div>
 

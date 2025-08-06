@@ -130,15 +130,15 @@ const Index = () => {
         <Tabs defaultValue="projects" className="space-y-6">
           <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="projects" className="flex items-center gap-2">
-              <Target className="h-4 w-4" />
+              <Target className="hidden md:block h-4 w-4" />
               Proyectos
             </TabsTrigger>
             <TabsTrigger value="scoring" className="flex items-center gap-2">
-              <Star className="h-4 w-4" />
+              <Star className="hidden md:block h-4 w-4" />
               Calificación
             </TabsTrigger>
             <TabsTrigger value="leaderboard" className="flex items-center gap-2">
-              <BarChart3 className="h-4 w-4" />
+              <BarChart3 className="hidden md:block h-4 w-4" />
               Ranking
             </TabsTrigger>
           </TabsList>
