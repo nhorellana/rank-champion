@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import logo from "../../public/logo-copec.png"
+import { Trophy, Users, Star, BarChart3, Target } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ProjectCard } from "@/components/ProjectCard";
 import { ProjectDetailModal } from "@/components/ProjectDetailModal";
@@ -8,7 +8,8 @@ import { ScoringPanel } from "@/components/ScoringPanel";
 import { LeaderboardChart } from "@/components/LeaderboardChart";
 import { useContestData } from "@/hooks/useContestData";
 import { Project } from "@/types/contest";
-import { Trophy, Users, Star, BarChart3, Target, Lightbulb } from "lucide-react";
+
+import logo from "../../public/logo-copec.png"
 
 const Index = () => {
   const { projects, judges, scores, loading, updateScore, getProjectScores } = useContestData();

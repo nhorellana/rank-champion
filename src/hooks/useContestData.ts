@@ -1,6 +1,8 @@
 import { useState, useCallback, useEffect } from 'react';
 import { Project, Score, ProjectScore, Judge } from '@/types/contest';
 import { supabase } from '@/integrations/supabase/client';
+import { Database } from '@/integrations/supabase/types';
+import { RealtimePostgresChangesPayload } from '@supabase/supabase-js';
 
 export const useContestData = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -8,7 +10,7 @@ export const useContestData = () => {
   const [scores, setScores] = useState<Score[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Load data from Supabase
+  // Load data from Supabase and setup real-time subscription
   useEffect(() => {
     const loadData = async () => {
       try {
@@ -54,12 +56,66 @@ export const useContestData = () => {
       }
     };
 
+    // Setup real-time subscription for scores
+    const subscription = supabase
+      .channel('scores-changes')
+      .on(
+        'postgres_changes' as const,
+        {
+          event: '*',
+          schema: 'public',
+          table: 'scores'
+        },
+        (payload: RealtimePostgresChangesPayload<Database['public']['Tables']['scores']['Row']>) => {
+          setScores(prevScores => {
+            // Handle DELETE event
+            if (payload.eventType === 'DELETE' && payload.old) {
+              return prevScores.filter(
+                s => s.projectId !== payload.old.project_id || s.judgeId !== payload.old.judge_id
+              );
+            }
+
+            // Handle INSERT and UPDATE events
+            const rawScore = payload.new;
+            if (!rawScore || !('project_id' in rawScore)) return prevScores;
+
+            const transformedScore = {
+              projectId: rawScore.project_id ?? '',
+              judgeId: rawScore.judge_id ?? '',
+              categoryA: rawScore.category_a,
+              categoryB: rawScore.category_b,
+              categoryC: rawScore.category_c,
+              categoryD: rawScore.category_d,
+              lastUpdated: rawScore.last_updated ?? new Date().toISOString()
+            };
+
+            const existingIndex = prevScores.findIndex(
+              s => s.projectId === transformedScore.projectId && s.judgeId === transformedScore.judgeId
+            );
+
+            if (existingIndex >= 0) {
+              const newScores = [...prevScores];
+              newScores[existingIndex] = transformedScore;
+              return newScores;
+            } else {
+              return [...prevScores, transformedScore];
+            }
+          });
+        }
+      )
+      .subscribe();
+
     loadData();
+
+    // Cleanup subscription on unmount
+    return () => {
+      subscription.unsubscribe();
+    };
   }, []);
 
   const updateScore = useCallback(async (updatedScore: Score) => {
     try {
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from('scores')
         .upsert({
           project_id: updatedScore.projectId,
@@ -68,7 +124,7 @@ export const useContestData = () => {
           category_b: updatedScore.categoryB,
           category_c: updatedScore.categoryC,
           category_d: updatedScore.categoryD,
-        }, { 
+        }, {
           onConflict: 'project_id,judge_id'
         })
         .select();
@@ -80,7 +136,7 @@ export const useContestData = () => {
         const existingIndex = prevScores.findIndex(
           s => s.projectId === updatedScore.projectId && s.judgeId === updatedScore.judgeId
         );
-        
+
         if (existingIndex >= 0) {
           const newScores = [...prevScores];
           newScores[existingIndex] = { ...updatedScore, lastUpdated: new Date().toISOString() };
@@ -97,22 +153,22 @@ export const useContestData = () => {
   const getProjectScores = useCallback((): ProjectScore[] => {
     return projects.map(project => {
       const projectScores = scores.filter(s => s.projectId === project.id);
-      
-      const avgA = projectScores.length > 0 
-        ? projectScores.reduce((sum, s) => sum + s.categoryA, 0) / projectScores.length 
+
+      const avgA = projectScores.length > 0
+        ? projectScores.reduce((sum, s) => sum + s.categoryA, 0) / projectScores.length
         : 0;
-      const avgB = projectScores.length > 0 
-        ? projectScores.reduce((sum, s) => sum + s.categoryB, 0) / projectScores.length 
+      const avgB = projectScores.length > 0
+        ? projectScores.reduce((sum, s) => sum + s.categoryB, 0) / projectScores.length
         : 0;
-      const avgC = projectScores.length > 0 
-        ? projectScores.reduce((sum, s) => sum + s.categoryC, 0) / projectScores.length 
+      const avgC = projectScores.length > 0
+        ? projectScores.reduce((sum, s) => sum + s.categoryC, 0) / projectScores.length
         : 0;
-      const avgD = projectScores.length > 0 
-        ? projectScores.reduce((sum, s) => sum + s.categoryD, 0) / projectScores.length 
+      const avgD = projectScores.length > 0
+        ? projectScores.reduce((sum, s) => sum + s.categoryD, 0) / projectScores.length
         : 0;
-      
+
       const totalAverage = (avgA + avgB + avgC + avgD) / 4;
-      
+
       return {
         projectId: project.id,
         averageA: Number(avgA.toFixed(2)),
