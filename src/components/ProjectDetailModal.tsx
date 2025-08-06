@@ -7,7 +7,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Project, ProjectScore, Judge, Score } from "@/types/contest";
-import { Users, Calendar, Trophy, Target, Lightbulb, AlertCircle } from "lucide-react";
+import { Users, Calendar, Trophy, Target, Lightbulb, TagIcon } from "lucide-react";
 
 interface ProjectDetailModalProps {
   project: Project | null;
@@ -41,19 +41,13 @@ export const ProjectDetailModal = ({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <div className="flex items-center gap-3">
-            <Trophy className={`h-6 w-6 ${getRankColor(projectScore.rank)}`} />
-            <div className="flex flex-col gap-1">
-              <DialogTitle className="text-2xl">{project.title}</DialogTitle>
-              <div className="flex items-center gap-2 mt-1">
-                <span className={`text-sm font-medium ${getRankColor(projectScore.rank)}`}>
-                  Posición #{projectScore.rank}
-                </span>
-              </div>
-            </div>
-            <div className="flex self-end">
-              <Badge variant="outline">{project.category}</Badge>
-            </div>
+          <DialogTitle className="text-2xl text-start">{project.title}</DialogTitle>
+          <div className="flex items-center gap-2">
+            <Trophy className={`h-4 w-4 ${getRankColor(projectScore.rank)}`} />
+            <span className={`text-sm font-medium ${getRankColor(projectScore.rank)}`}>
+              Posición #{projectScore.rank}
+            </span>
+            <Badge variant="outline">{project.category}</Badge>
           </div>
         </DialogHeader>
 
@@ -99,7 +93,10 @@ export const ProjectDetailModal = ({
 
             <Card>
               <CardHeader>
-                <CardTitle>Etiquetas</CardTitle>
+                <CardTitle className="flex items-center gap-2">
+                  <TagIcon className="h-5 w-5 text-primary" />
+                  Etiquetas
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="flex flex-wrap gap-2">

@@ -50,7 +50,7 @@ const Index = () => {
       <div className="border-b border-border/50 bg-card/30 backdrop-blur-sm sticky top-0 z-10">
         <div className="container mx-auto px-6 py-4">
           <div className="flex flex-col md:flex-row items-center justify-between">
-            <div className="flex flex-col md:flex-row items-center gap-3">
+            <div className="flex flex-col md:flex-row items-center gap-1 md:gap-3">
                 <img src={logo} className="w-40" />
               <div>
                 <h1 className="text-2xl font-bold text-foreground">Copec desafío de innovación</h1>
@@ -105,7 +105,7 @@ const Index = () => {
                 <div>
                   <p className="text-sm text-muted-foreground">Jurados</p>
                   <p className="text-lg font-semibold text-foreground">{judges.length}</p>
-                  <p className="text-sm text-success">Todos calificando</p>
+                  <p className="text-sm text-success">Disponibles</p>
                 </div>
               </div>
             </CardContent>
