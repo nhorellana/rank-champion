@@ -18,13 +18,13 @@ interface ProjectDetailModalProps {
   onClose: () => void;
 }
 
-export const ProjectDetailModal = ({ 
-  project, 
-  projectScore, 
-  judges, 
-  scores, 
-  isOpen, 
-  onClose 
+export const ProjectDetailModal = ({
+  project,
+  projectScore,
+  judges,
+  scores,
+  isOpen,
+  onClose
 }: ProjectDetailModalProps) => {
   if (!project || !projectScore) return null;
 
@@ -47,9 +47,9 @@ export const ProjectDetailModal = ({
               <DialogTitle className="text-2xl">{project.title}</DialogTitle>
               <div className="flex items-center gap-2 mt-1">
                 <span className={`text-sm font-medium ${getRankColor(projectScore.rank)}`}>
-                  Rank #{projectScore.rank}
+                  Posición #{projectScore.rank}
                 </span>
-                <Badge variant="secondary">{project.category}</Badge>
+                <Badge variant="outline">{project.category}</Badge>
               </div>
             </div>
           </div>
@@ -62,15 +62,15 @@ export const ProjectDetailModal = ({
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Target className="h-5 w-5 text-primary" />
-                  Project Overview
+                  Resumen del proyecto
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <h4 className="font-semibold text-foreground mb-2">Description</h4>
+                  <h4 className="font-semibold text-foreground mb-2">Descripción</h4>
                   <p className="text-muted-foreground">{project.description}</p>
                 </div>
-                
+
                 <div className="flex items-center gap-4 text-sm text-muted-foreground">
                   <div className="flex items-center gap-1">
                     <Users className="h-4 w-4" />
@@ -88,7 +88,7 @@ export const ProjectDetailModal = ({
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <AlertCircle className="h-5 w-5 text-destructive" />
-                  Problem Statement
+                  Problema
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -100,7 +100,7 @@ export const ProjectDetailModal = ({
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Lightbulb className="h-5 w-5 text-innovation" />
-                  Proposed Solution
+                  Solución propuesta
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -110,7 +110,7 @@ export const ProjectDetailModal = ({
 
             <Card>
               <CardHeader>
-                <CardTitle>Tags</CardTitle>
+                <CardTitle>Etiquetas</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="flex flex-wrap gap-2">
@@ -128,30 +128,29 @@ export const ProjectDetailModal = ({
           <div className="space-y-6">
             <Card>
               <CardHeader>
-                <CardTitle>Overall Scores</CardTitle>
+                <CardTitle>Puntajes actuales</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="bg-primary/10 rounded-lg p-4 text-center">
-                  <div className="text-sm text-muted-foreground">Total Average</div>
+                  <div className="text-sm text-muted-foreground">Puntaje promedio</div>
                   <div className="text-2xl font-bold text-primary">{projectScore.totalAverage}</div>
                 </div>
-                
                 <div className="grid grid-cols-2 gap-3">
                   <div className="bg-muted/50 rounded-lg p-3 text-center">
-                    <div className="text-xs text-muted-foreground">Category A</div>
+                    <div className="text-xs text-muted-foreground">Viabilidad</div>
                     <div className="text-lg font-semibold text-primary">{projectScore.averageA}</div>
                   </div>
                   <div className="bg-muted/50 rounded-lg p-3 text-center">
-                    <div className="text-xs text-muted-foreground">Category B</div>
-                    <div className="text-lg font-semibold text-innovation">{projectScore.averageB}</div>
+                    <div className="text-xs text-muted-foreground">Potencial</div>
+                    <div className="text-lg font-semibold text-primary">{projectScore.averageB}</div>
                   </div>
                   <div className="bg-muted/50 rounded-lg p-3 text-center">
-                    <div className="text-xs text-muted-foreground">Category C</div>
-                    <div className="text-lg font-semibold text-innovation-tertiary">{projectScore.averageC}</div>
+                    <div className="text-xs text-muted-foreground">Equipo</div>
+                    <div className="text-lg font-semibold text-primary">{projectScore.averageC}</div>
                   </div>
                   <div className="bg-muted/50 rounded-lg p-3 text-center">
-                    <div className="text-xs text-muted-foreground">Category D</div>
-                    <div className="text-lg font-semibold text-success">{projectScore.averageD}</div>
+                    <div className="text-xs text-muted-foreground">Innovación</div>
+                    <div className="text-lg font-semibold text-primary">{projectScore.averageD}</div>
                   </div>
                 </div>
               </CardContent>
@@ -159,38 +158,42 @@ export const ProjectDetailModal = ({
 
             <Card>
               <CardHeader>
-                <CardTitle>Judge Scores</CardTitle>
+                <CardTitle>Puntajes de los jurados</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
                 {judges.map((judge) => {
                   const judgeScore = projectScores.find(s => s.judgeId === judge.id);
                   return (
-                    <div key={judge.id} className="bg-muted/30 rounded-lg p-3">
+                    <div key={judge.id} className="bg-muted/60 rounded-lg p-3 flex flex-col gap-4">
                       <div className="flex items-center gap-2 mb-2">
-                        <span className="text-lg">{judge.avatar}</span>
+                        {/* <span className="text-lg">{judge.avatar}</span> */}
                         <div>
                           <div className="font-medium text-sm">{judge.name}</div>
                           <div className="text-xs text-muted-foreground">{judge.expertise}</div>
                         </div>
                       </div>
-                      {judgeScore && (
-                        <div className="grid grid-cols-4 gap-1 text-xs">
+                      {judgeScore ? (
+                        <div className="grid grid-cols-2 gap-1 text-xs">
                           <div className="text-center">
-                            <div className="text-muted-foreground">A</div>
-                            <div className="font-semibold">{judgeScore.categoryA}</div>
+                            <div className="text-muted-foreground">Viabilidad</div>
+                            <div className="font-semibold text-primary">{judgeScore.categoryA}</div>
                           </div>
                           <div className="text-center">
-                            <div className="text-muted-foreground">B</div>
-                            <div className="font-semibold">{judgeScore.categoryB}</div>
+                            <div className="text-muted-foreground">Potencial</div>
+                            <div className="font-semibold text-primary">{judgeScore.categoryB}</div>
                           </div>
                           <div className="text-center">
-                            <div className="text-muted-foreground">C</div>
-                            <div className="font-semibold">{judgeScore.categoryC}</div>
+                            <div className="text-muted-foreground">Equipo</div>
+                            <div className="font-semibold text-primary">{judgeScore.categoryC}</div>
                           </div>
                           <div className="text-center">
-                            <div className="text-muted-foreground">D</div>
-                            <div className="font-semibold">{judgeScore.categoryD}</div>
+                            <div className="text-muted-foreground">Innovación</div>
+                            <div className="font-semibold text-primary">{judgeScore.categoryD}</div>
                           </div>
+                        </div>
+                      ) : (
+                        <div className="text-left -mt-2">
+                          <div className="text-muted-foreground font-bold text-xs">No ha evaluado</div>
                         </div>
                       )}
                     </div>

@@ -46,7 +46,7 @@ export const LeaderboardChart = ({ projectScores, projects }: LeaderboardChartPr
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Trophy className="h-5 w-5 text-yellow-500" />
-            Top 3 Projects
+            Top 3 Proyectos
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -57,8 +57,8 @@ export const LeaderboardChart = ({ projectScores, projects }: LeaderboardChartPr
                 <div
                   key={score.projectId}
                   className={`p-4 rounded-lg border-2 ${
-                    score.rank === 1 
-                      ? "border-yellow-500/30 bg-yellow-500/5" 
+                    score.rank === 1
+                      ? "border-yellow-500/30 bg-yellow-500/5"
                       : score.rank === 2
                       ? "border-gray-400/30 bg-gray-400/5"
                       : "border-amber-600/30 bg-amber-600/5"
@@ -73,8 +73,8 @@ export const LeaderboardChart = ({ projectScores, projects }: LeaderboardChartPr
                   <h3 className="font-semibold text-foreground mb-1">{project?.title}</h3>
                   <Badge variant="secondary" className="mb-2">{project?.category}</Badge>
                   <div className="text-2xl font-bold text-primary">{score.totalAverage}</div>
-                  <div className="text-xs text-muted-foreground">Total Average</div>
-                  
+                  <div className="text-xs text-muted-foreground">Puntaje promedio</div>
+
                   <div className="grid grid-cols-2 gap-1 mt-3 text-xs">
                     <div className="text-center">
                       <div className="text-muted-foreground">A</div>
@@ -105,7 +105,7 @@ export const LeaderboardChart = ({ projectScores, projects }: LeaderboardChartPr
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <TrendingUp className="h-5 w-5 text-primary" />
-            Project Scores Overview
+            Resumen de puntajes
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -113,15 +113,15 @@ export const LeaderboardChart = ({ projectScores, projects }: LeaderboardChartPr
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={chartData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
-                <XAxis 
-                  dataKey="name" 
+                <XAxis
+                  dataKey="name"
                   angle={-45}
                   textAnchor="end"
                   height={100}
                   fontSize={12}
                 />
                 <YAxis domain={[0, 10]} />
-                <Tooltip 
+                <Tooltip
                   contentStyle={{
                     backgroundColor: 'hsl(var(--card))',
                     border: '1px solid hsl(var(--border))',
@@ -129,10 +129,10 @@ export const LeaderboardChart = ({ projectScores, projects }: LeaderboardChartPr
                   }}
                 />
                 <Legend />
-                <Bar dataKey="categoryA" fill="hsl(var(--primary))" name="Category A" />
-                <Bar dataKey="categoryB" fill="hsl(var(--innovation))" name="Category B" />
-                <Bar dataKey="categoryC" fill="hsl(var(--innovation-tertiary))" name="Category C" />
-                <Bar dataKey="categoryD" fill="hsl(var(--success))" name="Category D" />
+                <Bar dataKey="categoryA" fill="hsl(var(--primary))" name="Viabilidad" />
+                <Bar dataKey="categoryB" fill="hsl(var(--innovation))" name="Potencial" />
+                <Bar dataKey="categoryC" fill="hsl(var(--innovation-tertiary))" name="Equipo" />
+                <Bar dataKey="categoryD" fill="hsl(var(--success))" name="Innovación" />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -142,7 +142,7 @@ export const LeaderboardChart = ({ projectScores, projects }: LeaderboardChartPr
       {/* Full Rankings */}
       <Card>
         <CardHeader>
-          <CardTitle>Complete Rankings</CardTitle>
+          <CardTitle>Ranking completo</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-2">
@@ -165,23 +165,23 @@ export const LeaderboardChart = ({ projectScores, projects }: LeaderboardChartPr
                   <div className="flex items-center gap-4">
                     <div className="text-right">
                       <div className="text-lg font-bold text-primary">{score.totalAverage}</div>
-                      <div className="text-xs text-muted-foreground">Total</div>
+                      <div className="text-xs text-muted-foreground">Puntaje promedio</div>
                     </div>
                     <div className="grid grid-cols-4 gap-2 text-xs text-center">
                       <div>
-                        <div className="text-muted-foreground">A</div>
+                        <div className="text-muted-foreground">Viabilidad</div>
                         <div className="font-semibold">{score.averageA}</div>
                       </div>
                       <div>
-                        <div className="text-muted-foreground">B</div>
+                        <div className="text-muted-foreground">Potencial</div>
                         <div className="font-semibold">{score.averageB}</div>
                       </div>
                       <div>
-                        <div className="text-muted-foreground">C</div>
+                        <div className="text-muted-foreground">Equipo</div>
                         <div className="font-semibold">{score.averageC}</div>
                       </div>
                       <div>
-                        <div className="text-muted-foreground">D</div>
+                        <div className="text-muted-foreground">Innovación</div>
                         <div className="font-semibold">{score.averageD}</div>
                       </div>
                     </div>

@@ -71,8 +71,8 @@ export const ScoringPanel = ({ projects, judges, scores, onUpdateScore }: Scorin
   const handleSaveScore = () => {
     if (!selectedJudge || !selectedProject) {
       toast({
-        title: "Missing Selection",
-        description: "Please select both a judge and a project",
+        title: "Falta selección",
+        description: "Por favor, selecciona un evaluador y un proyecto",
         variant: "destructive"
       });
       return;
@@ -89,10 +89,10 @@ export const ScoringPanel = ({ projects, judges, scores, onUpdateScore }: Scorin
     };
 
     onUpdateScore(newScore);
-    
+
     toast({
-      title: "Score Updated",
-      description: `Score saved for ${judges.find(j => j.id === selectedJudge)?.name}`,
+      title: "Puntaje actualizado",
+      description: `Puntaje guardado para ${judges.find(j => j.id === selectedJudge)?.name}`,
     });
   };
 
@@ -106,26 +106,23 @@ export const ScoringPanel = ({ projects, judges, scores, onUpdateScore }: Scorin
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Star className="h-5 w-5 text-innovation" />
-            Judge Scoring Panel
+            Panel de calificación
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="text-sm font-medium mb-2 block">Select Judge</label>
+              <label className="text-sm font-medium mb-2 block">Selecciona un evaluador</label>
               <Select value={selectedJudge} onValueChange={handleJudgeChange}>
                 <SelectTrigger>
-                  <SelectValue placeholder="Choose a judge..." />
+                  <SelectValue placeholder="¿Quién eres?" />
                 </SelectTrigger>
                 <SelectContent>
                   {judges.map((judge) => (
                     <SelectItem key={judge.id} value={judge.id}>
-                      <div className="flex items-center gap-2">
-                        <span>{judge.avatar}</span>
-                        <div>
+                      <div className="flex flex-col items-start">
                           <div className="font-medium">{judge.name}</div>
                           <div className="text-xs text-muted-foreground">{judge.expertise}</div>
-                        </div>
                       </div>
                     </SelectItem>
                   ))}
@@ -134,10 +131,10 @@ export const ScoringPanel = ({ projects, judges, scores, onUpdateScore }: Scorin
             </div>
 
             <div>
-              <label className="text-sm font-medium mb-2 block">Select Project</label>
+              <label className="text-sm font-medium mb-2 block">Selecciona un proyecto</label>
               <Select value={selectedProject} onValueChange={handleProjectChange}>
                 <SelectTrigger>
-                  <SelectValue placeholder="Choose a project..." />
+                  <SelectValue placeholder="¿Qué proyecto estás evaluando?" />
                 </SelectTrigger>
                 <SelectContent>
                   {projects.map((project) => (
@@ -169,14 +166,14 @@ export const ScoringPanel = ({ projects, judges, scores, onUpdateScore }: Scorin
             <div className="space-y-6">
               <div className="bg-primary/5 rounded-lg p-4">
                 <div className="text-center mb-4">
-                  <div className="text-sm text-muted-foreground">Current Total Average</div>
+                  <div className="text-sm text-muted-foreground">Puntaje promedio actual</div>
                   <div className="text-2xl font-bold text-primary">{totalScore}</div>
                 </div>
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label className="text-sm font-medium flex items-center justify-between">
-                      Category A (Innovation)
+                      Viabilidad
                       <span className="text-primary font-bold">{categoryA}</span>
                     </label>
                     <Slider
@@ -191,8 +188,8 @@ export const ScoringPanel = ({ projects, judges, scores, onUpdateScore }: Scorin
 
                   <div className="space-y-2">
                     <label className="text-sm font-medium flex items-center justify-between">
-                      Category B (Technical)
-                      <span className="text-innovation font-bold">{categoryB}</span>
+                      Potencial
+                      <span className="text-primary font-bold">{categoryB}</span>
                     </label>
                     <Slider
                       value={[categoryB]}
@@ -206,8 +203,8 @@ export const ScoringPanel = ({ projects, judges, scores, onUpdateScore }: Scorin
 
                   <div className="space-y-2">
                     <label className="text-sm font-medium flex items-center justify-between">
-                      Category C (Impact)
-                      <span className="text-innovation-tertiary font-bold">{categoryC}</span>
+                      Equipo
+                      <span className="text-primary font-bold">{categoryC}</span>
                     </label>
                     <Slider
                       value={[categoryC]}
@@ -221,8 +218,8 @@ export const ScoringPanel = ({ projects, judges, scores, onUpdateScore }: Scorin
 
                   <div className="space-y-2">
                     <label className="text-sm font-medium flex items-center justify-between">
-                      Category D (Feasibility)
-                      <span className="text-success font-bold">{categoryD}</span>
+                      Innovación
+                      <span className="text-primary font-bold">{categoryD}</span>
                     </label>
                     <Slider
                       value={[categoryD]}
@@ -236,19 +233,19 @@ export const ScoringPanel = ({ projects, judges, scores, onUpdateScore }: Scorin
                 </div>
               </div>
 
-              <div className="flex gap-4">
+              <div className="flex flex-col md:flex-row gap-4">
                 <Button onClick={loadCurrentScore} variant="outline" className="flex-1">
-                  Reset to Current
+                  Reiniciar a puntaje actual
                 </Button>
                 <Button onClick={handleSaveScore} className="flex-1">
                   <Save className="h-4 w-4 mr-2" />
-                  Save Score
+                  Guardar puntaje
                 </Button>
               </div>
 
               {currentScore && (
                 <div className="text-xs text-muted-foreground text-center">
-                  Last updated: {new Date(currentScore.lastUpdated).toLocaleString()}
+                  Última actualización: {new Date(currentScore.lastUpdated).toLocaleString()}
                 </div>
               )}
             </div>

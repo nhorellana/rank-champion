@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import logo from "../../public/logo-copec.png"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ProjectCard } from "@/components/ProjectCard";
 import { ProjectDetailModal } from "@/components/ProjectDetailModal";
@@ -17,7 +16,7 @@ const Index = () => {
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
 
   const projectScores = getProjectScores();
-  const selectedProjectScore = selectedProject 
+  const selectedProjectScore = selectedProject
     ? projectScores.find(ps => ps.projectId === selectedProject.id)
     : null;
 
@@ -39,7 +38,7 @@ const Index = () => {
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-muted-foreground">Loading contest data...</p>
+          <p className="text-muted-foreground">Cargando datos del concurso...</p>
         </div>
       </div>
     );
@@ -50,24 +49,18 @@ const Index = () => {
       {/* Header */}
       <div className="border-b border-border/50 bg-card/30 backdrop-blur-sm sticky top-0 z-10">
         <div className="container mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-innovation rounded-lg flex items-center justify-center">
-                <Lightbulb className="h-6 w-6 text-white" />
-              </div>
+          <div className="flex flex-col md:flex-row items-center justify-between">
+            <div className="flex flex-col md:flex-row items-center gap-3">
+                <img src={logo} className="w-40" />
               <div>
-                <h1 className="text-2xl font-bold text-foreground">Innovation Contest 2024</h1>
-                <p className="text-sm text-muted-foreground">Judge and track 15 innovative projects</p>
+                <h1 className="text-2xl font-bold text-foreground">Copec desafío de innovación</h1>
+                <p className="text-sm text-muted-foreground">Desafío de innovación abierta para universitarios</p>
               </div>
             </div>
             <div className="flex items-center gap-4">
-              <div className="text-right">
-                <div className="text-sm text-muted-foreground">Total Projects</div>
+              <div className="hidden md:block md:text-right">
+                <div className="text-sm text-muted-foreground">Total de proyectos</div>
                 <div className="text-xl font-bold text-primary">{projects.length}</div>
-              </div>
-              <div className="text-right">
-                <div className="text-sm text-muted-foreground">Judges</div>
-                <div className="text-xl font-bold text-innovation">{judges.length}</div>
               </div>
             </div>
           </div>
@@ -82,52 +75,51 @@ const Index = () => {
               <div className="flex items-center gap-4">
                 <Trophy className="h-8 w-8 text-innovation" />
                 <div>
-                  <p className="text-sm text-muted-foreground">Leading Project</p>
+                  <p className="text-sm text-muted-foreground">Proyecto líder</p>
                   <p className="text-lg font-semibold text-foreground">
                     {winningProject?.title || "TBD"}
                   </p>
-                  <p className="text-sm text-innovation">{topProject?.totalAverage || "0"} avg score</p>
+                  <p className="text-sm text-innovation">{topProject?.totalAverage || "0"} puntaje promedio</p>
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="hidden md:block">
             <CardContent className="p-6">
               <div className="flex items-center gap-4">
                 <Target className="h-8 w-8 text-primary" />
                 <div>
-                  <p className="text-sm text-muted-foreground">Categories</p>
+                  <p className="text-sm text-muted-foreground">Categorías</p>
                   <p className="text-lg font-semibold text-foreground">4</p>
-                  <p className="text-sm text-primary">A, B, C, D</p>
+                  <p className="text-sm text-primary">Viabilidad, Potencial, Equipo, Innovación</p>
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="hidden md:block">
             <CardContent className="p-6">
               <div className="flex items-center gap-4">
                 <Users className="h-8 w-8 text-success" />
                 <div>
-                  <p className="text-sm text-muted-foreground">Active Judges</p>
+                  <p className="text-sm text-muted-foreground">Jurados</p>
                   <p className="text-lg font-semibold text-foreground">{judges.length}</p>
-                  <p className="text-sm text-success">All participating</p>
+                  <p className="text-sm text-success">Todos calificando</p>
                 </div>
               </div>
             </CardContent>
           </Card>
-
           <Card>
             <CardContent className="p-6">
               <div className="flex items-center gap-4">
                 <Star className="h-8 w-8 text-warning" />
                 <div>
-                  <p className="text-sm text-muted-foreground">Avg Score</p>
+                  <p className="text-sm text-muted-foreground">Puntaje promedio</p>
                   <p className="text-lg font-semibold text-foreground">
                     {(projectScores.reduce((sum, ps) => sum + ps.totalAverage, 0) / projectScores.length).toFixed(1)}
                   </p>
-                  <p className="text-sm text-warning">Out of 10</p>
+                  <p className="text-sm text-warning">De 10</p>
                 </div>
               </div>
             </CardContent>
@@ -139,15 +131,15 @@ const Index = () => {
           <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="projects" className="flex items-center gap-2">
               <Target className="h-4 w-4" />
-              Projects
+              Proyectos
             </TabsTrigger>
             <TabsTrigger value="scoring" className="flex items-center gap-2">
               <Star className="h-4 w-4" />
-              Scoring
+              Calificación
             </TabsTrigger>
             <TabsTrigger value="leaderboard" className="flex items-center gap-2">
               <BarChart3 className="h-4 w-4" />
-              Leaderboard
+              Ranking
             </TabsTrigger>
           </TabsList>
 

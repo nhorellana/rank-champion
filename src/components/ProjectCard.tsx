@@ -29,10 +29,10 @@ export const ProjectCard = ({ project, projectScore, onViewDetails }: ProjectCar
           <div className="flex items-center gap-2">
             {getRankIcon(projectScore.rank)}
             <span className={`text-sm font-medium ${getRankColor(projectScore.rank)}`}>
-              Rank #{projectScore.rank}
+              Posición #{projectScore.rank}
             </span>
           </div>
-          <Badge variant="secondary" className="text-xs">
+          <Badge variant="outline" className="text-xs">
             {project.category}
           </Badge>
         </div>
@@ -55,31 +55,31 @@ export const ProjectCard = ({ project, projectScore, onViewDetails }: ProjectCar
               <span>{new Date(project.submissionDate).toLocaleDateString()}</span>
             </div>
           </div>
-          
+
           <div className="grid grid-cols-4 gap-2 text-center">
             <div className="bg-muted/50 rounded-lg p-2">
-              <div className="text-xs text-muted-foreground">Cat A</div>
+              <div className="text-xs text-muted-foreground">Viabilidad</div>
               <div className="text-sm font-semibold text-primary">{projectScore.averageA}</div>
             </div>
             <div className="bg-muted/50 rounded-lg p-2">
-              <div className="text-xs text-muted-foreground">Cat B</div>
-              <div className="text-sm font-semibold text-innovation">{projectScore.averageB}</div>
+              <div className="text-xs text-muted-foreground">Potencial</div>
+              <div className="text-sm font-semibold text-primary">{projectScore.averageB}</div>
             </div>
             <div className="bg-muted/50 rounded-lg p-2">
-              <div className="text-xs text-muted-foreground">Cat C</div>
-              <div className="text-sm font-semibold text-innovation-tertiary">{projectScore.averageC}</div>
+              <div className="text-xs text-muted-foreground">Equipo</div>
+              <div className="text-sm font-semibold text-primary">{projectScore.averageC}</div>
             </div>
             <div className="bg-muted/50 rounded-lg p-2">
-              <div className="text-xs text-muted-foreground">Cat D</div>
-              <div className="text-sm font-semibold text-success">{projectScore.averageD}</div>
+              <div className="text-xs text-muted-foreground">Innovación</div>
+              <div className="text-sm font-semibold text-primary">{projectScore.averageD}</div>
             </div>
           </div>
-          
+
           <div className="bg-primary/10 rounded-lg p-3 text-center">
-            <div className="text-xs text-muted-foreground">Total Average</div>
+            <div className="text-xs text-muted-foreground">Puntaje promedio</div>
             <div className="text-xl font-bold text-primary">{projectScore.totalAverage}</div>
           </div>
-          
+
           <div className="flex flex-wrap gap-1">
             {project.tags.slice(0, 3).map((tag) => (
               <Badge key={tag} variant="outline" className="text-xs">
@@ -92,14 +92,13 @@ export const ProjectCard = ({ project, projectScore, onViewDetails }: ProjectCar
               </Badge>
             )}
           </div>
-          
-          <Button 
-            onClick={() => onViewDetails(project)} 
+
+          <Button
+            onClick={() => onViewDetails(project)}
             className="w-full"
-            variant="secondary"
+            variant="default"
           >
-            <Eye className="h-4 w-4 mr-2" />
-            View Details
+            Ver más
           </Button>
         </div>
       </CardContent>
