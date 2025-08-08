@@ -86,7 +86,7 @@ const Index = () => {
             </CardContent>
           </Card>
 
-          <Card className="hidden md:block">
+          <Card className="hidden lg:block">
             <CardContent className="p-6">
               <div className="flex items-center gap-4">
                 <Target className="h-8 w-8 text-primary" />
@@ -99,7 +99,7 @@ const Index = () => {
             </CardContent>
           </Card>
 
-          <Card className="hidden md:block">
+          <Card className="hidden lg:block">
             <CardContent className="p-6">
               <div className="flex items-center gap-4">
                 <Users className="h-8 w-8 text-success" />
