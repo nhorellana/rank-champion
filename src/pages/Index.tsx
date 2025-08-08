@@ -70,7 +70,7 @@ const Index = () => {
 
       <div className="container mx-auto px-6 py-8">
         {/* Quick Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <Card className="bg-gradient-to-br from-innovation/10 to-innovation-secondary/10 border-innovation/20">
             <CardContent className="p-6">
               <div className="flex items-center gap-4">
