@@ -1,4 +1,4 @@
-import { Trophy, Users } from "lucide-react";
+import { Users } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -8,37 +8,22 @@ interface ProjectCardProps {
   project: Project;
   projectScore: ProjectScore;
   onViewDetails: (project: Project) => void;
+  votesDone: number;
+  totalJudges: number;
 }
 
-export const ProjectCard = ({ project, projectScore, onViewDetails }: ProjectCardProps) => {
-  const getRankColor = (rank: number) => {
-    if (rank === 1) return "text-yellow-500";
-    if (rank === 2) return "text-gray-400";
-    if (rank === 3) return "text-amber-600";
-    return "text-muted-foreground";
-  };
-
-  const getRankIcon = (rank: number) => {
-    return rank <= 3 ? <Trophy className={`h-4 w-4 ${getRankColor(rank)}`} /> : null;
-  };
-
+export const ProjectCard = ({ project, projectScore, onViewDetails, votesDone, totalJudges }: ProjectCardProps) => {
   return (
     <Card className="hover:shadow-lg transition-all duration-300 bg-card border-border/50">
       <CardHeader className="pb-3">
         <div className="flex justify-between items-start">
-          <div className="flex items-center gap-2">
-            {getRankIcon(projectScore.rank)}
-            <span className={`text-sm font-medium ${getRankColor(projectScore.rank)}`}>
-              Posición #{projectScore.rank}
-            </span>
-          </div>
+          <h3 className="text-lg font-semibold text-foreground line-clamp-1">
+            {project.title}
+          </h3>
           <Badge variant="outline" className="text-xs">
             {project.category}
           </Badge>
         </div>
-        <h3 className="text-lg font-semibold text-foreground line-clamp-1">
-          {project.title}
-        </h3>
         <p className="text-sm text-muted-foreground line-clamp-2">
           {project.description}
         </p>
@@ -49,6 +34,10 @@ export const ProjectCard = ({ project, projectScore, onViewDetails }: ProjectCar
             <div className="flex items-center gap-1">
               <Users className="h-3 w-3" />
               <span>{project.team.length} miembros</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <Users className="h-3 w-3" />
+              <span>{votesDone}/{totalJudges} votos</span>
             </div>
           </div>
 

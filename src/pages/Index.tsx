@@ -9,7 +9,7 @@ import { LeaderboardChart } from "@/components/LeaderboardChart";
 import { useContestData } from "@/hooks/useContestData";
 import { Project } from "@/types/contest";
 
-import logo from "../../public/logo-copec.png"
+// Assets served from public/
 
 const Index = () => {
   const { projects, judges, scores, loading, updateScore, getProjectScores } = useContestData();
@@ -34,6 +34,17 @@ const Index = () => {
   const topProject = projectScores[0];
   const winningProject = projects.find(p => p.id === topProject?.projectId);
 
+  // Sort projects by remaining judges needed (descending)
+  const projectsSortedByRemaining = [...projects].sort((a, b) => {
+    const votesA = scores.filter(s => s.projectId === a.id).length;
+    const votesB = scores.filter(s => s.projectId === b.id).length;
+    const remainingA = Math.max(0, judges.length - votesA);
+    const remainingB = Math.max(0, judges.length - votesB);
+    if (remainingB !== remainingA) return remainingB - remainingA;
+    // Tie-breaker: keep stable by title
+    return a.title.localeCompare(b.title);
+  });
+
   if (loading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
@@ -52,7 +63,7 @@ const Index = () => {
         <div className="container mx-auto px-6 py-4">
           <div className="flex flex-col md:flex-row items-center justify-between">
             <div className="flex flex-col md:flex-row items-center gap-1 md:gap-3">
-                <img src={logo} className="w-40" />
+                <img src="/logo-copec.png" alt="Copec" className="w-40" />
               <div>
                 <h1 className="text-2xl font-bold text-foreground">Copec desafío de innovación</h1>
                 <p className="text-sm text-muted-foreground">Desafío de innovación abierta para universitarios</p>
@@ -76,7 +87,7 @@ const Index = () => {
               <div className="flex items-center gap-4">
                 <Trophy className="h-8 w-8 text-innovation" />
                 <div>
-                  <p className="text-sm text-muted-foreground">Proyecto líder</p>
+                  <p className="text-sm text-muted-foreground">Ganador tentativo</p>
                   <p className="text-lg font-semibold text-foreground">
                     {winningProject?.title || "TBD"}
                   </p>
@@ -146,13 +157,17 @@ const Index = () => {
 
           <TabsContent value="projects" className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {projects.map((project) => {
+              {projectsSortedByRemaining.map((project) => {
                 const projectScore = projectScores.find(ps => ps.projectId === project.id);
+                const votesDone = scores.filter(s => s.projectId === project.id).length;
+                const totalJudges = judges.length;
                 return projectScore ? (
                   <ProjectCard
                     key={project.id}
                     project={project}
                     projectScore={projectScore}
+                    votesDone={votesDone}
+                    totalJudges={totalJudges}
                     onViewDetails={handleViewDetails}
                   />
                 ) : null;
