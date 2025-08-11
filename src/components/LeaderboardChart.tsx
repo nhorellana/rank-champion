@@ -1,16 +1,65 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ProjectScore, Project } from "@/types/contest";
-import { Trophy, TrendingUp, Award } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { ProjectScore, Project, Judge, Score } from "@/types/contest";
+import { Trophy, TrendingUp, Award, User } from "lucide-react";
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
+import { useState } from "react";
 
 interface LeaderboardChartProps {
   projectScores: ProjectScore[];
   projects: Project[];
+  judges: Judge[];
+  scores: Score[];
 }
 
-export const LeaderboardChart = ({ projectScores, projects }: LeaderboardChartProps) => {
-  const chartData = projectScores.slice(0, 10).map(score => {
+export const LeaderboardChart = ({ projectScores, projects, judges, scores }: LeaderboardChartProps) => {
+  const [showPersonalView, setShowPersonalView] = useState(false);
+  const [selectedJudgeId, setSelectedJudgeId] = useState<string>("");
+
+  // Calculate personal rankings for a specific judge
+  const getPersonalProjectScores = (judgeId: string): ProjectScore[] => {
+    const judgeScores = scores.filter(score => score.judgeId === judgeId);
+    
+    const personalScores = projects.map(project => {
+      const score = judgeScores.find(s => s.projectId === project.id);
+      if (!score) {
+        return {
+          projectId: project.id,
+          averageA: 0,
+          averageB: 0,
+          averageC: 0,
+          averageD: 0,
+          totalAverage: 0,
+          rank: 0
+        };
+      }
+      
+      const total = (score.categoryA + score.categoryB + score.categoryC + score.categoryD) / 4;
+      return {
+        projectId: project.id,
+        averageA: score.categoryA,
+        averageB: score.categoryB,
+        averageC: score.categoryC,
+        averageD: score.categoryD,
+        totalAverage: Number(total.toFixed(1)),
+        rank: 0
+      };
+    }).sort((a, b) => b.totalAverage - a.totalAverage);
+
+    // Assign ranks
+    return personalScores.map((score, index) => ({
+      ...score,
+      rank: index + 1
+    }));
+  };
+
+  const displayScores = showPersonalView && selectedJudgeId 
+    ? getPersonalProjectScores(selectedJudgeId)
+    : projectScores;
+  const chartData = displayScores.slice(0, 10).map(score => {
     const project = projects.find(p => p.id === score.projectId);
     return {
       name: project?.title.substring(0, 15) + "..." || "Unknown",
@@ -23,7 +72,7 @@ export const LeaderboardChart = ({ projectScores, projects }: LeaderboardChartPr
     };
   });
 
-  const topThree = projectScores.slice(0, 3);
+  const topThree = displayScores.slice(0, 3);
 
   const getRankColor = (rank: number) => {
     if (rank === 1) return "text-yellow-500 bg-yellow-500/10";
@@ -41,12 +90,49 @@ export const LeaderboardChart = ({ projectScores, projects }: LeaderboardChartPr
 
   return (
     <div className="space-y-6">
+      {/* View Toggle Controls */}
+      <Card>
+        <CardContent className="pt-6">
+          <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <Switch
+                id="personal-view"
+                checked={showPersonalView}
+                onCheckedChange={setShowPersonalView}
+              />
+              <Label htmlFor="personal-view" className="flex items-center gap-2">
+                <User className="h-4 w-4" />
+                Ver ranking personal
+              </Label>
+            </div>
+            
+            {showPersonalView && (
+              <div className="flex items-center gap-2">
+                <Label htmlFor="judge-select" className="text-sm">Juez:</Label>
+                <Select value={selectedJudgeId} onValueChange={setSelectedJudgeId}>
+                  <SelectTrigger id="judge-select" className="w-48">
+                    <SelectValue placeholder="Seleccionar juez" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {judges.map((judge) => (
+                      <SelectItem key={judge.id} value={judge.id}>
+                        {judge.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Podium */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Trophy className="h-5 w-5 text-yellow-500" />
-            Top 3 Proyectos
+            {showPersonalView ? "Top 3 Proyectos (Ranking Personal)" : "Top 3 Proyectos"}
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -104,7 +190,7 @@ export const LeaderboardChart = ({ projectScores, projects }: LeaderboardChartPr
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <TrendingUp className="h-5 w-5 text-primary" />
-            Resumen de puntajes
+            {showPersonalView ? "Resumen de puntajes (Personal)" : "Resumen de puntajes"}
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -141,11 +227,13 @@ export const LeaderboardChart = ({ projectScores, projects }: LeaderboardChartPr
       {/* Full Rankings */}
       <Card>
         <CardHeader>
-          <CardTitle>Ranking completo</CardTitle>
+          <CardTitle>
+            {showPersonalView ? "Ranking completo (Personal)" : "Ranking completo"}
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-2">
-            {projectScores.map((score) => {
+            {displayScores.map((score) => {
               const project = projects.find(p => p.id === score.projectId);
               return (
                 <div
