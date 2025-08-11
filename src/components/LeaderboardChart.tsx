@@ -72,7 +72,7 @@ export const LeaderboardChart = ({ projectScores, projects }: LeaderboardChartPr
                   </div>
                   <h3 className="font-semibold text-foreground mb-1">{project?.title}</h3>
                   <Badge variant="default" className="mb-2">{project?.category}</Badge>
-                  <div className="text-2xl font-bold text-primary">{score.totalAverage} / 10</div>
+                  <div className="text-2xl font-bold text-primary">{score.totalAverage} / 5</div>
 
                   <div className="grid grid-cols-2 gap-1 mt-3 text-xs">
                     <div className="text-center">
@@ -119,7 +119,7 @@ export const LeaderboardChart = ({ projectScores, projects }: LeaderboardChartPr
                   height={100}
                   fontSize={12}
                 />
-                <YAxis domain={[0, 10]} />
+                <YAxis domain={[0, 5]} />
                 <Tooltip
                   contentStyle={{
                     backgroundColor: 'hsl(var(--card))',

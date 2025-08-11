@@ -67,7 +67,7 @@ const Index = () => {
               <div>
                 <h1 className="text-2xl font-bold text-foreground">Copec Desafío Futuro</h1>
                 <p className="text-sm text-muted-foreground">
-                  Programa de Valor abierta - Desafío para estudiantes de educación superior
+                  Programa de innovación abierta - Desafío para estudiantes de educación superior
                 </p>
               </div>
             </div>

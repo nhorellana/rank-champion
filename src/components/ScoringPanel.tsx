@@ -18,10 +18,10 @@ interface ScoringPanelProps {
 export const ScoringPanel = ({ projects, judges, scores, onUpdateScore }: ScoringPanelProps) => {
   const [selectedJudge, setSelectedJudge] = useState<string>("");
   const [selectedProject, setSelectedProject] = useState<string>("");
-  const [categoryA, setCategoryA] = useState<number>(5);
-  const [categoryB, setCategoryB] = useState<number>(5);
-  const [categoryC, setCategoryC] = useState<number>(5);
-  const [categoryD, setCategoryD] = useState<number>(5);
+  const [categoryA, setCategoryA] = useState<number>(1);
+  const [categoryB, setCategoryB] = useState<number>(1);
+  const [categoryC, setCategoryC] = useState<number>(1);
+  const [categoryD, setCategoryD] = useState<number>(1);
   const { toast } = useToast();
 
   const currentScore = scores.find(
@@ -179,7 +179,7 @@ export const ScoringPanel = ({ projects, judges, scores, onUpdateScore }: Scorin
                     <Slider
                       value={[categoryA]}
                       onValueChange={(value) => setCategoryA(value[0])}
-                      max={10}
+                      max={5}
                       min={1}
                       step={1}
                       className="w-full"
@@ -194,7 +194,7 @@ export const ScoringPanel = ({ projects, judges, scores, onUpdateScore }: Scorin
                     <Slider
                       value={[categoryB]}
                       onValueChange={(value) => setCategoryB(value[0])}
-                      max={10}
+                      max={5}
                       min={1}
                       step={1}
                       className="w-full"
@@ -209,7 +209,7 @@ export const ScoringPanel = ({ projects, judges, scores, onUpdateScore }: Scorin
                     <Slider
                       value={[categoryC]}
                       onValueChange={(value) => setCategoryC(value[0])}
-                      max={10}
+                      max={5}
                       min={1}
                       step={1}
                       className="w-full"
@@ -224,7 +224,7 @@ export const ScoringPanel = ({ projects, judges, scores, onUpdateScore }: Scorin
                     <Slider
                       value={[categoryD]}
                       onValueChange={(value) => setCategoryD(value[0])}
-                      max={10}
+                      max={5}
                       min={1}
                       step={1}
                       className="w-full"
