@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Trophy, Users, Star, BarChart3, Target } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ProjectCard } from "@/components/ProjectCard";
 import { ProjectDetailModal } from "@/components/ProjectDetailModal";
+import { OnboardingModal } from "@/components/OnboardingModal";
 import { ScoringPanel } from "@/components/ScoringPanel";
 import { LeaderboardChart } from "@/components/LeaderboardChart";
 import { useContestData } from "@/hooks/useContestData";
@@ -15,6 +16,14 @@ const Index = () => {
   const { projects, judges, scores, loading, updateScore, getProjectScores } = useContestData();
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
+  const [showOnboarding, setShowOnboarding] = useState(false);
+
+  useEffect(() => {
+    const hasSeenOnboarding = localStorage.getItem('onboarding-completed');
+    if (!hasSeenOnboarding && !loading) {
+      setShowOnboarding(true);
+    }
+  }, [loading]);
 
   const projectScores = getProjectScores();
   const selectedProjectScore = selectedProject
@@ -177,6 +186,11 @@ const Index = () => {
           </TabsContent>
         </Tabs>
       </div>
+
+      <OnboardingModal 
+        isOpen={showOnboarding}
+        onClose={() => setShowOnboarding(false)}
+      />
 
       <ProjectDetailModal
         project={selectedProject}
