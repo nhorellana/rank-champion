@@ -55,7 +55,7 @@ export const ProjectCard = ({ project, projectScore, onViewDetails, votesDone, t
               <div className="text-sm font-semibold text-primary">{projectScore.averageC}</div>
             </div>
             <div className="bg-muted/50 rounded-lg p-2">
-              <div className="text-xs text-muted-foreground">Propuesta de valor</div>
+              <div className="text-xs text-muted-foreground">Valor</div>
               <div className="text-sm font-semibold text-primary">{projectScore.averageD}</div>
             </div>
           </div>

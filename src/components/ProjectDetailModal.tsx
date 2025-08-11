@@ -132,7 +132,7 @@ export const ProjectDetailModal = ({
                     <div className="text-lg font-semibold text-primary">{projectScore.averageC}</div>
                   </div>
                   <div className="bg-muted/50 rounded-lg p-3 text-center">
-                    <div className="text-xs text-muted-foreground">Propuesta de valor</div>
+                    <div className="text-xs text-muted-foreground">Valor</div>
                     <div className="text-lg font-semibold text-primary">{projectScore.averageD}</div>
                   </div>
                 </div>
@@ -169,7 +169,7 @@ export const ProjectDetailModal = ({
                             <div className="font-semibold text-primary">{judgeScore.categoryC}</div>
                           </div>
                           <div className="text-center">
-                            <div className="text-muted-foreground">Propuesta de valor</div>
+                            <div className="text-muted-foreground">Valor</div>
                             <div className="font-semibold text-primary">{judgeScore.categoryD}</div>
                           </div>
                         </div>

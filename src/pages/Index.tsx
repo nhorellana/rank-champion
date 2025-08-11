@@ -67,7 +67,7 @@ const Index = () => {
               <div>
                 <h1 className="text-2xl font-bold text-foreground">Copec Desafío Futuro</h1>
                 <p className="text-sm text-muted-foreground">
-                  Programa de Propuesta de valor abierta - Desafío para estudiantes de educación superior
+                  Programa de Valor abierta - Desafío para estudiantes de educación superior
                 </p>
               </div>
             </div>
@@ -106,7 +106,7 @@ const Index = () => {
                 <div>
                   <p className="text-sm text-muted-foreground">Categorías</p>
                   <p className="text-lg font-semibold text-foreground">4</p>
-                  <p className="text-sm text-primary">Impacto, Factibilidad, Equipo, Propuesta de valor</p>
+                  <p className="text-sm text-primary">Impacto, Factibilidad, Equipo, Valor</p>
                 </div>
               </div>
             </CardContent>

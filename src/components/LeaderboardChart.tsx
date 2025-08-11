@@ -88,7 +88,7 @@ export const LeaderboardChart = ({ projectScores, projects }: LeaderboardChartPr
                       <div className="font-semibold">{score.averageC}</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-muted-foreground">Propuesta de valor</div>
+                      <div className="text-muted-foreground">Valor</div>
                       <div className="font-semibold">{score.averageD}</div>
                     </div>
                   </div>
@@ -131,7 +131,7 @@ export const LeaderboardChart = ({ projectScores, projects }: LeaderboardChartPr
                 <Bar dataKey="categoryA" fill="hsl(var(--primary))" name="Impacto" />
                 <Bar dataKey="categoryB" fill="hsl(var(--innovation))" name="Factibilidad" />
                 <Bar dataKey="categoryC" fill="hsl(var(--innovation-tertiary))" name="Equipo" />
-                <Bar dataKey="categoryD" fill="hsl(var(--success))" name="Propuesta de valor" />
+                <Bar dataKey="categoryD" fill="hsl(var(--success))" name="Valor" />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -180,7 +180,7 @@ export const LeaderboardChart = ({ projectScores, projects }: LeaderboardChartPr
                         <div className="font-semibold">{score.averageC}</div>
                       </div>
                       <div>
-                        <div className="text-muted-foreground">Propuesta de valor</div>
+                        <div className="text-muted-foreground">Valor</div>
                         <div className="font-semibold">{score.averageD}</div>
                       </div>
                     </div>

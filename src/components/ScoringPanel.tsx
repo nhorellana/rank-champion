@@ -218,7 +218,7 @@ export const ScoringPanel = ({ projects, judges, scores, onUpdateScore }: Scorin
 
                   <div className="space-y-2">
                     <label className="text-sm font-medium flex items-center justify-between">
-                      Propuesta de valor
+                      Valor
                       <span className="text-primary font-bold">{categoryD}</span>
                     </label>
                     <Slider
