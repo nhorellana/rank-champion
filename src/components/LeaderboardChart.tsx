@@ -1,6 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ProjectScore, Project, Judge, Score } from "@/types/contest";
@@ -16,8 +15,7 @@ interface LeaderboardChartProps {
 }
 
 export const LeaderboardChart = ({ projectScores, projects, judges, scores }: LeaderboardChartProps) => {
-  const [showPersonalView, setShowPersonalView] = useState(false);
-  const [selectedJudgeId, setSelectedJudgeId] = useState<string>("");
+  const [selectedJudgeId, setSelectedJudgeId] = useState<string>("todos");
 
   // Calculate personal rankings for a specific judge
   const getPersonalProjectScores = (judgeId: string): ProjectScore[] => {
@@ -56,9 +54,11 @@ export const LeaderboardChart = ({ projectScores, projects, judges, scores }: Le
     }));
   };
 
-  const displayScores = showPersonalView && selectedJudgeId 
-    ? getPersonalProjectScores(selectedJudgeId)
-    : projectScores;
+  const displayScores = selectedJudgeId === "todos" 
+    ? projectScores
+    : getPersonalProjectScores(selectedJudgeId);
+
+  const isPersonalView = selectedJudgeId !== "todos";
   const chartData = displayScores.slice(0, 10).map(score => {
     const project = projects.find(p => p.id === score.projectId);
     return {
@@ -90,39 +90,24 @@ export const LeaderboardChart = ({ projectScores, projects, judges, scores }: Le
 
   return (
     <div className="space-y-6">
-      {/* View Toggle Controls */}
+      {/* Judge Selector */}
       <Card>
         <CardContent className="pt-6">
-          <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <Switch
-                id="personal-view"
-                checked={showPersonalView}
-                onCheckedChange={setShowPersonalView}
-              />
-              <Label htmlFor="personal-view" className="flex items-center gap-2">
-                <User className="h-4 w-4" />
-                Ver ranking personal
-              </Label>
-            </div>
-            
-            {showPersonalView && (
-              <div className="flex items-center gap-2">
-                <Label htmlFor="judge-select" className="text-sm">Juez:</Label>
-                <Select value={selectedJudgeId} onValueChange={setSelectedJudgeId}>
-                  <SelectTrigger id="judge-select" className="w-48">
-                    <SelectValue placeholder="Seleccionar juez" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {judges.map((judge) => (
-                      <SelectItem key={judge.id} value={judge.id}>
-                        {judge.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            )}
+          <div className="flex items-center gap-2">
+            <Label htmlFor="judge-select" className="text-sm font-medium">Juez:</Label>
+            <Select value={selectedJudgeId} onValueChange={setSelectedJudgeId}>
+              <SelectTrigger id="judge-select" className="w-48">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="todos">Todos (Ranking General)</SelectItem>
+                {judges.map((judge) => (
+                  <SelectItem key={judge.id} value={judge.id}>
+                    {judge.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
         </CardContent>
       </Card>
@@ -132,7 +117,7 @@ export const LeaderboardChart = ({ projectScores, projects, judges, scores }: Le
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Trophy className="h-5 w-5 text-yellow-500" />
-            {showPersonalView ? "Top 3 Proyectos (Ranking Personal)" : "Top 3 Proyectos"}
+            {isPersonalView ? "Top 3 Proyectos (Ranking Personal)" : "Top 3 Proyectos"}
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -190,7 +175,7 @@ export const LeaderboardChart = ({ projectScores, projects, judges, scores }: Le
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <TrendingUp className="h-5 w-5 text-primary" />
-            {showPersonalView ? "Resumen de puntajes (Personal)" : "Resumen de puntajes"}
+            {isPersonalView ? "Resumen de puntajes (Personal)" : "Resumen de puntajes"}
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -228,7 +213,7 @@ export const LeaderboardChart = ({ projectScores, projects, judges, scores }: Le
       <Card>
         <CardHeader>
           <CardTitle>
-            {showPersonalView ? "Ranking completo (Personal)" : "Ranking completo"}
+            {isPersonalView ? "Ranking completo (Personal)" : "Ranking completo"}
           </CardTitle>
         </CardHeader>
         <CardContent>
