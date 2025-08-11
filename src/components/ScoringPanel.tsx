@@ -173,7 +173,7 @@ export const ScoringPanel = ({ projects, judges, scores, onUpdateScore }: Scorin
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label className="text-sm font-medium flex items-center justify-between">
-                      Viabilidad
+                      Impacto
                       <span className="text-primary font-bold">{categoryA}</span>
                     </label>
                     <Slider
@@ -188,7 +188,7 @@ export const ScoringPanel = ({ projects, judges, scores, onUpdateScore }: Scorin
 
                   <div className="space-y-2">
                     <label className="text-sm font-medium flex items-center justify-between">
-                      Potencial
+                      Factibilidad
                       <span className="text-primary font-bold">{categoryB}</span>
                     </label>
                     <Slider
@@ -218,7 +218,7 @@ export const ScoringPanel = ({ projects, judges, scores, onUpdateScore }: Scorin
 
                   <div className="space-y-2">
                     <label className="text-sm font-medium flex items-center justify-between">
-                      Innovación
+                      Propuesta de valor
                       <span className="text-primary font-bold">{categoryD}</span>
                     </label>
                     <Slider

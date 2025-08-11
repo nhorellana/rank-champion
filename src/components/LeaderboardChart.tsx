@@ -76,11 +76,11 @@ export const LeaderboardChart = ({ projectScores, projects }: LeaderboardChartPr
 
                   <div className="grid grid-cols-2 gap-1 mt-3 text-xs">
                     <div className="text-center">
-                      <div className="text-muted-foreground">Viabilidad</div>
+                      <div className="text-muted-foreground">Impacto</div>
                       <div className="font-semibold">{score.averageA}</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-muted-foreground">Potencial</div>
+                      <div className="text-muted-foreground">Factibilidad</div>
                       <div className="font-semibold">{score.averageB}</div>
                     </div>
                     <div className="text-center">
@@ -88,7 +88,7 @@ export const LeaderboardChart = ({ projectScores, projects }: LeaderboardChartPr
                       <div className="font-semibold">{score.averageC}</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-muted-foreground">Innovación</div>
+                      <div className="text-muted-foreground">Propuesta de valor</div>
                       <div className="font-semibold">{score.averageD}</div>
                     </div>
                   </div>
@@ -128,10 +128,10 @@ export const LeaderboardChart = ({ projectScores, projects }: LeaderboardChartPr
                   }}
                 />
                 <Legend />
-                <Bar dataKey="categoryA" fill="hsl(var(--primary))" name="Viabilidad" />
-                <Bar dataKey="categoryB" fill="hsl(var(--innovation))" name="Potencial" />
+                <Bar dataKey="categoryA" fill="hsl(var(--primary))" name="Impacto" />
+                <Bar dataKey="categoryB" fill="hsl(var(--innovation))" name="Factibilidad" />
                 <Bar dataKey="categoryC" fill="hsl(var(--innovation-tertiary))" name="Equipo" />
-                <Bar dataKey="categoryD" fill="hsl(var(--success))" name="Innovación" />
+                <Bar dataKey="categoryD" fill="hsl(var(--success))" name="Propuesta de valor" />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -168,11 +168,11 @@ export const LeaderboardChart = ({ projectScores, projects }: LeaderboardChartPr
                     </div>
                     <div className="grid grid-cols-4 gap-2 text-xs text-center">
                       <div>
-                        <div className="text-muted-foreground">Viabilidad</div>
+                        <div className="text-muted-foreground">Impacto</div>
                         <div className="font-semibold">{score.averageA}</div>
                       </div>
                       <div>
-                        <div className="text-muted-foreground">Potencial</div>
+                        <div className="text-muted-foreground">Factibilidad</div>
                         <div className="font-semibold">{score.averageB}</div>
                       </div>
                       <div>
@@ -180,7 +180,7 @@ export const LeaderboardChart = ({ projectScores, projects }: LeaderboardChartPr
                         <div className="font-semibold">{score.averageC}</div>
                       </div>
                       <div>
-                        <div className="text-muted-foreground">Innovación</div>
+                        <div className="text-muted-foreground">Propuesta de valor</div>
                         <div className="font-semibold">{score.averageD}</div>
                       </div>
                     </div>

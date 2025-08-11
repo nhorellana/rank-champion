@@ -43,11 +43,11 @@ export const ProjectCard = ({ project, projectScore, onViewDetails, votesDone, t
 
           <div className="grid grid-cols-4 gap-2 text-center">
             <div className="bg-muted/50 rounded-lg p-2">
-              <div className="text-xs text-muted-foreground">Viabilidad</div>
+              <div className="text-xs text-muted-foreground">Impacto</div>
               <div className="text-sm font-semibold text-primary">{projectScore.averageA}</div>
             </div>
             <div className="bg-muted/50 rounded-lg p-2">
-              <div className="text-xs text-muted-foreground">Potencial</div>
+              <div className="text-xs text-muted-foreground">Factibilidad</div>
               <div className="text-sm font-semibold text-primary">{projectScore.averageB}</div>
             </div>
             <div className="bg-muted/50 rounded-lg p-2">
@@ -55,7 +55,7 @@ export const ProjectCard = ({ project, projectScore, onViewDetails, votesDone, t
               <div className="text-sm font-semibold text-primary">{projectScore.averageC}</div>
             </div>
             <div className="bg-muted/50 rounded-lg p-2">
-              <div className="text-xs text-muted-foreground">Innovación</div>
+              <div className="text-xs text-muted-foreground">Propuesta de valor</div>
               <div className="text-sm font-semibold text-primary">{projectScore.averageD}</div>
             </div>
           </div>

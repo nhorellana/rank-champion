@@ -63,10 +63,12 @@ const Index = () => {
         <div className="container mx-auto px-6 py-4">
           <div className="flex flex-col md:flex-row items-center justify-between">
             <div className="flex flex-col md:flex-row items-center gap-1 md:gap-3">
-                <img src="/logo-copec.png" alt="Copec" className="w-40" />
+              <img src="/logo-copec.png" alt="Copec" className="w-40" />
               <div>
-                <h1 className="text-2xl font-bold text-foreground">Copec desafío de innovación</h1>
-                <p className="text-sm text-muted-foreground">Desafío de innovación abierta para universitarios</p>
+                <h1 className="text-2xl font-bold text-foreground">Copec Desafío Futuro</h1>
+                <p className="text-sm text-muted-foreground">
+                  Programa de Propuesta de valor abierta - Desafío para estudiantes de educación superior
+                </p>
               </div>
             </div>
             <div className="flex items-center gap-4">
@@ -104,7 +106,7 @@ const Index = () => {
                 <div>
                   <p className="text-sm text-muted-foreground">Categorías</p>
                   <p className="text-lg font-semibold text-foreground">4</p>
-                  <p className="text-sm text-primary">Viabilidad, Potencial, Equipo, Innovación</p>
+                  <p className="text-sm text-primary">Impacto, Factibilidad, Equipo, Propuesta de valor</p>
                 </div>
               </div>
             </CardContent>

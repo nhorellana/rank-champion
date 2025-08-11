@@ -120,11 +120,11 @@ export const ProjectDetailModal = ({
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   <div className="bg-muted/50 rounded-lg p-3 text-center">
-                    <div className="text-xs text-muted-foreground">Viabilidad</div>
+                    <div className="text-xs text-muted-foreground">Impacto</div>
                     <div className="text-lg font-semibold text-primary">{projectScore.averageA}</div>
                   </div>
                   <div className="bg-muted/50 rounded-lg p-3 text-center">
-                    <div className="text-xs text-muted-foreground">Potencial</div>
+                    <div className="text-xs text-muted-foreground">Factibilidad</div>
                     <div className="text-lg font-semibold text-primary">{projectScore.averageB}</div>
                   </div>
                   <div className="bg-muted/50 rounded-lg p-3 text-center">
@@ -132,7 +132,7 @@ export const ProjectDetailModal = ({
                     <div className="text-lg font-semibold text-primary">{projectScore.averageC}</div>
                   </div>
                   <div className="bg-muted/50 rounded-lg p-3 text-center">
-                    <div className="text-xs text-muted-foreground">Innovación</div>
+                    <div className="text-xs text-muted-foreground">Propuesta de valor</div>
                     <div className="text-lg font-semibold text-primary">{projectScore.averageD}</div>
                   </div>
                 </div>
@@ -157,11 +157,11 @@ export const ProjectDetailModal = ({
                       {judgeScore ? (
                         <div className="grid grid-cols-2 gap-1 text-xs">
                           <div className="text-center">
-                            <div className="text-muted-foreground">Viabilidad</div>
+                            <div className="text-muted-foreground">Impacto</div>
                             <div className="font-semibold text-primary">{judgeScore.categoryA}</div>
                           </div>
                           <div className="text-center">
-                            <div className="text-muted-foreground">Potencial</div>
+                            <div className="text-muted-foreground">Factibilidad</div>
                             <div className="font-semibold text-primary">{judgeScore.categoryB}</div>
                           </div>
                           <div className="text-center">
@@ -169,7 +169,7 @@ export const ProjectDetailModal = ({
                             <div className="font-semibold text-primary">{judgeScore.categoryC}</div>
                           </div>
                           <div className="text-center">
-                            <div className="text-muted-foreground">Innovación</div>
+                            <div className="text-muted-foreground">Propuesta de valor</div>
                             <div className="font-semibold text-primary">{judgeScore.categoryD}</div>
                           </div>
                         </div>
