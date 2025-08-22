@@ -7,7 +7,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Project, ProjectScore, Judge, Score } from "@/types/contest";
-import { Users, Calendar, Trophy, Target, Lightbulb, TagIcon } from "lucide-react";
+import { Users, Calendar, Trophy, Target, Lightbulb, TagIcon, Star, MessageSquare } from "lucide-react";
 
 interface ProjectDetailModalProps {
   project: Project | null;
@@ -29,6 +29,7 @@ export const ProjectDetailModal = ({
   if (!project || !projectScore) return null;
 
   const projectScores = scores.filter(s => s.projectId === project.id);
+  const finalistsVotes = projectScores.filter(s => s.melaJuego).length;
 
   const getRankColor = (rank: number) => {
     if (rank === 1) return "text-yellow-500";
@@ -48,6 +49,12 @@ export const ProjectDetailModal = ({
               Posición #{projectScore.rank}
             </span>
             <Badge variant="outline">{project.category}</Badge>
+            {finalistsVotes > 0 && (
+              <Badge variant="secondary" className="bg-innovation/20 text-innovation border-innovation">
+                <Star className="h-3 w-3 mr-1" />
+                {finalistsVotes} juez{finalistsVotes === 1 ? '' : 'es'} apuesta{finalistsVotes === 1 ? '' : 'n'} por este proyecto
+              </Badge>
+            )}
           </div>
         </DialogHeader>
 
@@ -146,35 +153,55 @@ export const ProjectDetailModal = ({
                 {judges.map((judge) => {
                   const judgeScore = projectScores.find(s => s.judgeId === judge.id);
                   return (
-                    <div key={judge.id} className="bg-muted/60 rounded-lg p-3 flex flex-col gap-4">
-                      <div className="flex items-center gap-2 mb-2">
-                        {/* <span className="text-lg">{judge.avatar}</span> */}
-                        <div>
-                          <div className="font-medium text-sm">{judge.name}</div>
-                          <div className="text-xs text-muted-foreground">{judge.expertise}</div>
+                    <div key={judge.id} className="bg-muted/60 rounded-lg p-4 space-y-3">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <div>
+                            <div className="font-medium text-sm">{judge.name}</div>
+                            <div className="text-xs text-muted-foreground">{judge.expertise}</div>
+                          </div>
                         </div>
+                        {judgeScore?.melaJuego && (
+                          <Badge variant="secondary" className="bg-innovation/20 text-innovation border-innovation">
+                            <Star className="h-3 w-3 mr-1" />
+                            Me la juego
+                          </Badge>
+                        )}
                       </div>
+                      
                       {judgeScore ? (
-                        <div className="grid grid-cols-2 gap-1 text-xs">
-                          <div className="text-center">
-                            <div className="text-muted-foreground">Viabilidad</div>
-                            <div className="font-semibold text-primary">{judgeScore.categoryA}</div>
+                        <>
+                          <div className="grid grid-cols-2 gap-2 text-xs">
+                            <div className="text-center">
+                              <div className="text-muted-foreground">Viabilidad</div>
+                              <div className="font-semibold text-primary">{judgeScore.categoryA}</div>
+                            </div>
+                            <div className="text-center">
+                              <div className="text-muted-foreground">Potencial</div>
+                              <div className="font-semibold text-primary">{judgeScore.categoryB}</div>
+                            </div>
+                            <div className="text-center">
+                              <div className="text-muted-foreground">Equipo</div>
+                              <div className="font-semibold text-primary">{judgeScore.categoryC}</div>
+                            </div>
+                            <div className="text-center">
+                              <div className="text-muted-foreground">Innovación</div>
+                              <div className="font-semibold text-primary">{judgeScore.categoryD}</div>
+                            </div>
                           </div>
-                          <div className="text-center">
-                            <div className="text-muted-foreground">Potencial</div>
-                            <div className="font-semibold text-primary">{judgeScore.categoryB}</div>
-                          </div>
-                          <div className="text-center">
-                            <div className="text-muted-foreground">Equipo</div>
-                            <div className="font-semibold text-primary">{judgeScore.categoryC}</div>
-                          </div>
-                          <div className="text-center">
-                            <div className="text-muted-foreground">Innovación</div>
-                            <div className="font-semibold text-primary">{judgeScore.categoryD}</div>
-                          </div>
-                        </div>
+                          
+                          {judgeScore.comment && (
+                            <div className="mt-3 p-3 bg-muted/40 rounded-md">
+                              <div className="flex items-center gap-2 mb-2">
+                                <MessageSquare className="h-3 w-3 text-muted-foreground" />
+                                <span className="text-xs font-medium text-muted-foreground">Comentarios</span>
+                              </div>
+                              <p className="text-xs text-foreground">{judgeScore.comment}</p>
+                            </div>
+                          )}
+                        </>
                       ) : (
-                        <div className="text-left -mt-2">
+                        <div className="text-left">
                           <div className="text-muted-foreground font-bold text-xs">No ha evaluado</div>
                         </div>
                       )}
