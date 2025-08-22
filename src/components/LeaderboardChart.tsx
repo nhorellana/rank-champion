@@ -1,16 +1,66 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ProjectScore, Project } from "@/types/contest";
+import { ProjectScore, Project, Judge, Score } from "@/types/contest";
 import { Trophy, TrendingUp, Award } from "lucide-react";
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
+import { useState } from "react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
 
 interface LeaderboardChartProps {
   projectScores: ProjectScore[];
   projects: Project[];
+  judges: Judge[];
+  scores: Score[];
 }
 
-export const LeaderboardChart = ({ projectScores, projects }: LeaderboardChartProps) => {
-  const chartData = projectScores.slice(0, 10).map(score => {
+export const LeaderboardChart = ({ projectScores, projects, judges, scores }: LeaderboardChartProps) => {
+  const [selectedJudgeId, setSelectedJudgeId] = useState<string>("todos");
+
+  // Calculate personal rankings for a specific judge
+  const getPersonalProjectScores = (judgeId: string): ProjectScore[] => {
+    const judgeScores = scores.filter(score => score.judgeId === judgeId);
+
+    const personalScores = projects.map(project => {
+      const score = judgeScores.find(s => s.projectId === project.id);
+      if (!score) {
+        return {
+          projectId: project.id,
+          averageA: 0,
+          averageB: 0,
+          averageC: 0,
+          averageD: 0,
+          totalAverage: 0,
+          rank: 0
+        };
+      }
+
+      const total = (score.categoryA + score.categoryB + score.categoryC + score.categoryD) / 4;
+      return {
+        projectId: project.id,
+        averageA: score.categoryA,
+        averageB: score.categoryB,
+        averageC: score.categoryC,
+        averageD: score.categoryD,
+        totalAverage: Number(total.toFixed(1)),
+        rank: 0
+      };
+    }).sort((a, b) => b.totalAverage - a.totalAverage);
+
+    // Assign ranks
+    return personalScores.map((score, index) => ({
+      ...score,
+      rank: index + 1
+    }));
+  };
+
+  const displayScores = selectedJudgeId === "todos"
+    ? projectScores
+    : getPersonalProjectScores(selectedJudgeId);
+
+  const isPersonalView = selectedJudgeId !== "todos";
+
+  const chartData = displayScores.slice(0, 10).map(score => {
     const project = projects.find(p => p.id === score.projectId);
     return {
       name: project?.title.substring(0, 15) + "..." || "Unknown",
@@ -99,12 +149,34 @@ export const LeaderboardChart = ({ projectScores, projects }: LeaderboardChartPr
         </CardContent>
       </Card>
 
+      {/* Judge Selector */}
+      <Card>
+        <CardContent className="pt-6">
+          <div className="flex items-center gap-2">
+            <Label htmlFor="judge-select" className="text-sm font-medium">Juez:</Label>
+            <Select value={selectedJudgeId} onValueChange={setSelectedJudgeId}>
+              <SelectTrigger id="judge-select" className="w-48">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="todos">Todos</SelectItem>
+                {judges.map((judge) => (
+                  <SelectItem key={judge.id} value={judge.id}>
+                    {judge.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Chart */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <TrendingUp className="h-5 w-5 text-primary" />
-            Resumen de puntajes
+            {isPersonalView ? "Resumen de puntajes (Personal)" : "Resumen de puntajes"}
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -138,14 +210,16 @@ export const LeaderboardChart = ({ projectScores, projects }: LeaderboardChartPr
         </CardContent>
       </Card>
 
-      {/* Full Rankings */}
+            {/* Full Rankings */}
       <Card>
         <CardHeader>
-          <CardTitle>Ranking completo</CardTitle>
+          <CardTitle>
+            {isPersonalView ? "Ranking completo (Personal)" : "Ranking completo"}
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-2">
-            {projectScores.map((score) => {
+            {displayScores.map((score) => {
               const project = projects.find(p => p.id === score.projectId);
               return (
                 <div

@@ -190,6 +190,8 @@ const Index = () => {
             <LeaderboardChart
               projectScores={projectScores}
               projects={projects}
+              judges={judges}
+              scores={scores}
             />
           </TabsContent>
         </Tabs>
