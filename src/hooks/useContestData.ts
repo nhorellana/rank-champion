@@ -46,7 +46,9 @@ export const useContestData = () => {
             categoryB: s.category_b,
             categoryC: s.category_c,
             categoryD: s.category_d,
-            lastUpdated: s.last_updated
+            lastUpdated: s.last_updated,
+            comment: s.comment,
+            melaJuego: s.me_la_juego || false,
           })));
         }
       } catch (error) {
@@ -86,7 +88,9 @@ export const useContestData = () => {
               categoryB: rawScore.category_b,
               categoryC: rawScore.category_c,
               categoryD: rawScore.category_d,
-              lastUpdated: rawScore.last_updated ?? new Date().toISOString()
+              lastUpdated: rawScore.last_updated ?? new Date().toISOString(),
+              comment: rawScore.comment,
+              melaJuego: rawScore.me_la_juego || false,
             };
 
             const existingIndex = prevScores.findIndex(
@@ -124,6 +128,8 @@ export const useContestData = () => {
           category_b: updatedScore.categoryB,
           category_c: updatedScore.categoryC,
           category_d: updatedScore.categoryD,
+          comment: updatedScore.comment,
+          me_la_juego: updatedScore.melaJuego,
         }, {
           onConflict: 'project_id,judge_id'
         })

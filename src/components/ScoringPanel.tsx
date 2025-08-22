@@ -7,6 +7,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Project, Judge, Score } from "@/types/contest";
 import { Save, Star } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
 
 interface ScoringPanelProps {
   projects: Project[];
@@ -22,6 +24,8 @@ export const ScoringPanel = ({ projects, judges, scores, onUpdateScore }: Scorin
   const [categoryB, setCategoryB] = useState<number>(1);
   const [categoryC, setCategoryC] = useState<number>(1);
   const [categoryD, setCategoryD] = useState<number>(1);
+  const [comment, setComment] = useState<string>("");
+  const [melaJuego, setMelaJuego] = useState<boolean>(false);
   const { toast } = useToast();
 
   const currentScore = scores.find(
@@ -34,11 +38,15 @@ export const ScoringPanel = ({ projects, judges, scores, onUpdateScore }: Scorin
       setCategoryB(currentScore.categoryB);
       setCategoryC(currentScore.categoryC);
       setCategoryD(currentScore.categoryD);
+      setComment(currentScore.comment || "");
+      setMelaJuego(currentScore.melaJuego);
     } else {
       setCategoryA(5);
       setCategoryB(5);
       setCategoryC(5);
       setCategoryD(5);
+      setComment("");
+      setMelaJuego(false);
     }
   };
 
@@ -51,6 +59,8 @@ export const ScoringPanel = ({ projects, judges, scores, onUpdateScore }: Scorin
         setCategoryB(score.categoryB);
         setCategoryC(score.categoryC);
         setCategoryD(score.categoryD);
+          setComment(score.comment || "");
+        setMelaJuego(score.melaJuego);
       }
     }
   };
@@ -64,6 +74,8 @@ export const ScoringPanel = ({ projects, judges, scores, onUpdateScore }: Scorin
         setCategoryB(score.categoryB);
         setCategoryC(score.categoryC);
         setCategoryD(score.categoryD);
+        setComment(score.comment || "");
+        setMelaJuego(score.melaJuego);
       }
     }
   };
@@ -85,7 +97,9 @@ export const ScoringPanel = ({ projects, judges, scores, onUpdateScore }: Scorin
       categoryB,
       categoryC,
       categoryD,
-      lastUpdated: new Date().toISOString()
+      lastUpdated: new Date().toISOString(),
+      comment,
+      melaJuego,
     };
 
     onUpdateScore(newScore);
@@ -229,6 +243,37 @@ export const ScoringPanel = ({ projects, judges, scores, onUpdateScore }: Scorin
                       step={1}
                       className="w-full"
                     />
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">Comentarios adicionales (opcional)</label>
+                  <Textarea
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
+                    placeholder="Escribe aquí tus observaciones sobre el proyecto..."
+                    className="min-h-[100px]"
+                  />
+                </div>
+
+                <div className="flex items-start mt-2 space-x-2 p-4 border rounded-lg">
+                  <Checkbox
+                    id="me-la-juego"
+                    checked={melaJuego}
+                    onCheckedChange={(checked) => setMelaJuego(checked === true)}
+                  />
+                  <div className="grid gap-1.5 leading-none">
+                    <label
+                      htmlFor="me-la-juego"
+                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 flex items-center gap-2"
+                    >
+                      Me la juego por este proyecto (opcional)
+                    </label>
+                    <p className="text-xs text-muted-foreground">
+                      Marca esta opción si consideras que este proyecto tiene excepcional potencial
+                    </p>
                   </div>
                 </div>
               </div>

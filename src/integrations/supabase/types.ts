@@ -83,10 +83,12 @@ export type Database = {
           category_b: number
           category_c: number
           category_d: number
+          comment: string | null
           created_at: string | null
           id: string
           judge_id: string | null
           last_updated: string | null
+          me_la_juego: boolean | null
           project_id: string | null
         }
         Insert: {
@@ -94,10 +96,12 @@ export type Database = {
           category_b: number
           category_c: number
           category_d: number
+          comment?: string | null
           created_at?: string | null
           id?: string
           judge_id?: string | null
           last_updated?: string | null
+          me_la_juego?: boolean | null
           project_id?: string | null
         }
         Update: {
@@ -105,10 +109,12 @@ export type Database = {
           category_b?: number
           category_c?: number
           category_d?: number
+          comment?: string | null
           created_at?: string | null
           id?: string
           judge_id?: string | null
           last_updated?: string | null
+          me_la_juego?: boolean | null
           project_id?: string | null
         }
         Relationships: [

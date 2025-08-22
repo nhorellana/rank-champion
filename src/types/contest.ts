@@ -18,6 +18,8 @@ export interface Score {
   categoryC: number;
   categoryD: number;
   lastUpdated: string;
+  comment?: string;
+  melaJuego: boolean;
 }
 
 export interface Judge {
