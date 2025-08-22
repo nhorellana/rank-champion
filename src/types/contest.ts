@@ -17,6 +17,8 @@ export interface Score {
   categoryB: number;
   categoryC: number;
   categoryD: number;
+  comment?: string;
+  melaJuego: boolean;
   lastUpdated: string;
 }
 

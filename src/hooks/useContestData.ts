@@ -46,6 +46,8 @@ export const useContestData = () => {
             categoryB: s.category_b,
             categoryC: s.category_c,
             categoryD: s.category_d,
+            comment: s.comment,
+            melaJuego: s.me_la_juego || false,
             lastUpdated: s.last_updated
           })));
         }
@@ -86,6 +88,8 @@ export const useContestData = () => {
               categoryB: rawScore.category_b,
               categoryC: rawScore.category_c,
               categoryD: rawScore.category_d,
+              comment: rawScore.comment,
+              melaJuego: rawScore.me_la_juego || false,
               lastUpdated: rawScore.last_updated ?? new Date().toISOString()
             };
 
@@ -124,6 +128,8 @@ export const useContestData = () => {
           category_b: updatedScore.categoryB,
           category_c: updatedScore.categoryC,
           category_d: updatedScore.categoryD,
+          comment: updatedScore.comment,
+          me_la_juego: updatedScore.melaJuego,
         }, {
           onConflict: 'project_id,judge_id'
         })

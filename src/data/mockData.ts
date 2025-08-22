@@ -188,6 +188,8 @@ mockProjects.forEach(project => {
       categoryB: Math.floor(Math.random() * 10) + 1,
       categoryC: Math.floor(Math.random() * 10) + 1,
       categoryD: Math.floor(Math.random() * 10) + 1,
+      comment: Math.random() > 0.5 ? "Este es un proyecto muy interesante con gran potencial." : undefined,
+      melaJuego: Math.random() > 0.8, // 20% chance
       lastUpdated: new Date().toISOString()
     });
   });
