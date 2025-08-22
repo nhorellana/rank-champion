@@ -42,9 +42,9 @@ export const PasswordGate = ({ onCorrectPassword }: PasswordGateProps) => {
           <div className="mx-auto w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
             <Lock className="h-6 w-6 text-primary" />
           </div>
-          <CardTitle className="text-2xl font-bold">Acceso al Concurso</CardTitle>
+          <CardTitle className="text-2xl font-bold">Acceso a plataforma de votación</CardTitle>
           <p className="text-muted-foreground">
-            Ingresa la contraseña para acceder a la plataforma
+            Ingresa la contraseña para acceder
           </p>
         </CardHeader>
         <CardContent>
