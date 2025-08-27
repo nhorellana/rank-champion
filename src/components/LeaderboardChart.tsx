@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ProjectScore, Project, Judge, Score } from "@/types/contest";
-import { Trophy, TrendingUp, Award } from "lucide-react";
+import { Trophy, TrendingUp, Award, Star } from "lucide-react";
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
 import { useState } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -87,6 +87,10 @@ export const LeaderboardChart = ({ projectScores, projects, judges, scores }: Le
     if (rank === 2) return <Award className="h-6 w-6 text-gray-400" />;
     if (rank === 3) return <Award className="h-6 w-6 text-amber-600" />;
     return <TrendingUp className="h-6 w-6 text-muted-foreground" />;
+  };
+
+  const getMelaJuegoCount = (projectId: string) => {
+    return scores.filter(score => score.projectId === projectId && score.melaJuego).length;
   };
 
   return (
@@ -236,9 +240,17 @@ export const LeaderboardChart = ({ projectScores, projects, judges, scores }: Le
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-2">
+                      {getMelaJuegoCount(score.projectId) > 0 && (
+                        <div className="flex items-center gap-1 text-amber-500">
+                          <Star className="h-4 w-4 fill-current" />
+                          <span className="text-sm font-semibold">{getMelaJuegoCount(score.projectId)}</span>
+                        </div>
+                      )}
+                    </div>
                     <div className="text-right">
                       <div className="text-lg font-bold text-primary">{score.totalAverage}</div>
-                      <div className="text-xs text-muted-foreground">Puntaje promedio</div>
+                      <div className="text-xs text-muted-foreground">Promedio</div>
                     </div>
                     <div className="grid grid-cols-4 gap-2 text-xs text-center">
                       <div>

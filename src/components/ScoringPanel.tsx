@@ -41,10 +41,10 @@ export const ScoringPanel = ({ projects, judges, scores, onUpdateScore }: Scorin
       setComment(currentScore.comment || "");
       setMelaJuego(currentScore.melaJuego);
     } else {
-      setCategoryA(5);
-      setCategoryB(5);
-      setCategoryC(5);
-      setCategoryD(5);
+      setCategoryA(1);
+      setCategoryB(1);
+      setCategoryC(1);
+      setCategoryD(1);
       setComment("");
       setMelaJuego(false);
     }
