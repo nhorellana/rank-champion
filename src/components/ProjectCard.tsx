@@ -65,11 +65,13 @@ export const ProjectCard = ({ project, projectScore, onViewDetails, votesDone, t
             <div className="text-xl font-bold text-primary">{projectScore.totalAverage}</div>
           </div>
 
-          <div className="flex flex-wrap gap-1">
+          <div className="flex flex-col gap-1.5">
             {project.tags.slice(0, 3).map((tag) => (
-              <Badge key={tag} variant="outline" className="text-xs">
-                {tag}
-              </Badge>
+              <div className="w-fit">
+                <Badge key={tag} variant="outline" className="text-xs">
+                  {tag}
+                </Badge>
+              </div>
             ))}
             {project.tags.length > 3 && (
               <Badge variant="outline" className="text-xs">

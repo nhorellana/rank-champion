@@ -36,13 +36,7 @@ const Index = () => {
 
   // Sort projects by remaining judges needed (descending)
   const projectsSortedByRemaining = [...projects].sort((a, b) => {
-    const votesA = scores.filter(s => s.projectId === a.id).length;
-    const votesB = scores.filter(s => s.projectId === b.id).length;
-    const remainingA = Math.max(0, judges.length - votesA);
-    const remainingB = Math.max(0, judges.length - votesB);
-    if (remainingB !== remainingA) return remainingB - remainingA;
-    // Tie-breaker: keep stable by title
-    return a.title.localeCompare(b.title);
+    return a.weight - b.weight;
   });
 
   if (loading) {
