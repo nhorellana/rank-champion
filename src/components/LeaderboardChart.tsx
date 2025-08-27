@@ -31,7 +31,8 @@ export const LeaderboardChart = ({ projectScores, projects, judges, scores }: Le
           averageC: 0,
           averageD: 0,
           totalAverage: 0,
-          rank: 0
+          rank: 0,
+          weight: project.weight || 999
         };
       }
       
@@ -43,9 +44,16 @@ export const LeaderboardChart = ({ projectScores, projects, judges, scores }: Le
         averageC: score.categoryC,
         averageD: score.categoryD,
         totalAverage: Number(total.toFixed(1)),
-        rank: 0
+        rank: 0,
+        weight: project.weight || 999
       };
-    }).sort((a, b) => b.totalAverage - a.totalAverage);
+    }).sort((a, b) => {
+      // Sort by weight first (lower numbers = higher priority), then by total average
+      if (a.weight !== b.weight) {
+        return a.weight - b.weight;
+      }
+      return b.totalAverage - a.totalAverage;
+    });
 
     // Assign ranks
     return personalScores.map((score, index) => ({
