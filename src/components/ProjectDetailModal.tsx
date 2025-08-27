@@ -50,7 +50,7 @@ export const ProjectDetailModal = ({
             </span>
             <Badge variant="outline">{project.category}</Badge>
             {finalistsVotes > 0 && (
-              <Badge variant="secondary" className="bg-innovation/20 text-innovation border-innovation">
+              <Badge variant="outline" className="bg-innovation/20 text-innovation border-innovation">
                 <Star className="h-3 w-3 mr-1" />
                 {finalistsVotes} juez{finalistsVotes === 1 ? '' : 'es'} apuesta{finalistsVotes === 1 ? '' : 'n'} por este proyecto
               </Badge>
@@ -162,7 +162,7 @@ export const ProjectDetailModal = ({
                           </div>
                         </div>
                         {judgeScore?.melaJuego && (
-                          <Badge variant="secondary" className="bg-innovation/20 text-innovation border-innovation">
+                          <Badge variant="outline" className="bg-innovation/20 text-innovation border-innovation">
                             <Star className="h-3 w-3 mr-1" />
                             Me la juego
                           </Badge>

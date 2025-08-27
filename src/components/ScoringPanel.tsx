@@ -184,7 +184,7 @@ export const ScoringPanel = ({ projects, judges, scores, onUpdateScore }: Scorin
               <CardContent className="p-4">
                 <div className="flex items-center gap-2 mb-2">
                   <h3 className="font-semibold">{selectedProjectData.title}</h3>
-                  <Badge variant="secondary">{selectedProjectData.category}</Badge>
+                  <Badge variant="outline">{selectedProjectData.category}</Badge>
                 </div>
                 <p className="text-sm text-muted-foreground">{selectedProjectData.description}</p>
               </CardContent>
