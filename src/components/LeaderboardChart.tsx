@@ -80,7 +80,7 @@ export const LeaderboardChart = ({ projectScores, projects, judges, scores }: Le
     };
   });
 
-  const topThree = projectScores.slice(0, 3);
+  const topThree = projectScores.sort((a, b) => b.totalAverage - a.totalAverage).slice(0, 3);
 
   const getRankColor = (rank: number) => {
     if (rank === 1) return "text-yellow-500 bg-yellow-500/10";
