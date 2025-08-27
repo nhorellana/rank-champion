@@ -188,7 +188,7 @@ const Index = () => {
 
           <TabsContent value="leaderboard">
             <LeaderboardChart
-              projectScores={projectScores}
+              projectScores={projectScores.sort((a, b) => a.weight - b.weight)}
               projects={projects}
               judges={judges}
               scores={scores}

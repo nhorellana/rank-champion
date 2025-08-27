@@ -31,7 +31,8 @@ export const LeaderboardChart = ({ projectScores, projects, judges, scores }: Le
           averageC: 0,
           averageD: 0,
           totalAverage: 0,
-          rank: 0
+          rank: 0,
+          weight: project.weight || 999
         };
       }
 
@@ -43,9 +44,15 @@ export const LeaderboardChart = ({ projectScores, projects, judges, scores }: Le
         averageC: score.categoryC,
         averageD: score.categoryD,
         totalAverage: Number(total.toFixed(1)),
-        rank: 0
+        rank: 0,
+        weight: project.weight || 999
       };
-    }).sort((a, b) => b.totalAverage - a.totalAverage);
+    }).sort((a, b) => {
+      // Sort by weight first (lower numbers = higher priority), then by total average
+      if (a.weight !== b.weight) {
+        return a.weight - b.weight;
+      }
+    });
 
     // Assign ranks
     return personalScores.map((score, index) => ({
@@ -53,7 +60,6 @@ export const LeaderboardChart = ({ projectScores, projects, judges, scores }: Le
       rank: index + 1
     }));
   };
-
   const displayScores = selectedJudgeId === "todos"
     ? projectScores
     : getPersonalProjectScores(selectedJudgeId);
@@ -69,7 +75,8 @@ export const LeaderboardChart = ({ projectScores, projects, judges, scores }: Le
       categoryB: score.averageB,
       categoryC: score.averageC,
       categoryD: score.averageD,
-      rank: score.rank
+      rank: score.rank,
+      weight: score.weight
     };
   });
 
@@ -92,6 +99,8 @@ export const LeaderboardChart = ({ projectScores, projects, judges, scores }: Le
   const getMelaJuegoCount = (projectId: string) => {
     return scores.filter(score => score.projectId === projectId && score.melaJuego).length;
   };
+
+  console.log('Project scores', projectScores, projects)
 
   return (
     <div className="space-y-6">
@@ -223,7 +232,7 @@ export const LeaderboardChart = ({ projectScores, projects, judges, scores }: Le
         </CardHeader>
         <CardContent>
           <div className="space-y-2">
-            {displayScores.map((score) => {
+            {displayScores.sort((a, b) => b.totalAverage - a.totalAverage).map((score) => {
               const project = projects.find(p => p.id === score.projectId);
               return (
                 <div

@@ -185,7 +185,8 @@ export const useContestData = () => {
         averageC: Number(avgC.toFixed(2)),
         averageD: Number(avgD.toFixed(2)),
         totalAverage: Number(totalAverage.toFixed(2)),
-        rank: 0 // Will be calculated after sorting
+        rank: 0, // Will be calculated after sorting
+        weight: project.weight
       };
     }).sort((a, b) => b.totalAverage - a.totalAverage)
       .map((score, index) => ({ ...score, rank: index + 1 }));
