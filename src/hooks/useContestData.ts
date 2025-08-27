@@ -31,11 +31,14 @@ export const useContestData = () => {
           .select('*');
 
         if (projectsData) {
-          setProjects(projectsData.map(p => ({
+          const mappedProjects = projectsData.map(p => ({
             ...p,
             proposedSolution: p.proposed_solution,
-            submissionDate: p.submission_date
-          })));
+            submissionDate: p.submission_date,
+            weight: p.weight || 999
+          }));
+          // Sort by weight first (lower numbers = higher priority)
+          setProjects(mappedProjects.sort((a, b) => a.weight - b.weight));
         }
         if (judgesData) setJudges(judgesData);
         if (scoresData) {

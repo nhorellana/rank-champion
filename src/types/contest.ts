@@ -8,6 +8,7 @@ export interface Project {
   category: string;
   tags: string[];
   submissionDate: string;
+  weight: number;
 }
 
 export interface Score {
@@ -37,4 +38,5 @@ export interface ProjectScore {
   averageD: number;
   totalAverage: number;
   rank: number;
+  weight?: number;
 }

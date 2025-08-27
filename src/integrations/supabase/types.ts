@@ -50,6 +50,7 @@ export type Database = {
           tags: string[]
           team: string[]
           title: string
+          weight: number | null
         }
         Insert: {
           category: string
@@ -62,6 +63,7 @@ export type Database = {
           tags?: string[]
           team?: string[]
           title: string
+          weight?: number | null
         }
         Update: {
           category?: string
@@ -74,6 +76,7 @@ export type Database = {
           tags?: string[]
           team?: string[]
           title?: string
+          weight?: number | null
         }
         Relationships: []
       }
