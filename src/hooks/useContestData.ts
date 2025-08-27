@@ -31,11 +31,14 @@ export const useContestData = () => {
           .select('*');
 
         if (projectsData) {
-          setProjects(projectsData.map(p => ({
+          const mappedProjects = projectsData.map(p => ({
             ...p,
             proposedSolution: p.proposed_solution,
-            submissionDate: p.submission_date
-          })));
+            submissionDate: p.submission_date,
+            weight: p.weight || 999
+          }));
+          // Sort by weight first (lower numbers = higher priority)
+          setProjects(mappedProjects.sort((a, b) => a.weight - b.weight));
         }
         if (judgesData) setJudges(judgesData);
         if (scoresData) {
@@ -182,10 +185,16 @@ export const useContestData = () => {
         averageC: Number(avgC.toFixed(2)),
         averageD: Number(avgD.toFixed(2)),
         totalAverage: Number(totalAverage.toFixed(2)),
-        rank: 0 // Will be calculated after sorting
+        rank: 0, // Will be calculated after sorting
+        weight: project.weight || 999
       };
-    }).sort((a, b) => b.totalAverage - a.totalAverage)
-      .map((score, index) => ({ ...score, rank: index + 1 }));
+    }).sort((a, b) => {
+      // Sort by weight first (lower numbers = higher priority), then by total average
+      if (a.weight !== b.weight) {
+        return a.weight - b.weight;
+      }
+      return b.totalAverage - a.totalAverage;
+    }).map((score, index) => ({ ...score, rank: index + 1 }));
   }, [projects, scores]);
 
   const getScoreByJudgeAndProject = useCallback((judgeId: string, projectId: string): Score | undefined => {

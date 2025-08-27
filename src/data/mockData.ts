@@ -11,91 +11,99 @@ export const mockJudges: Judge[] = [
 export const mockProjects: Project[] = [
   {
     id: 'p1',
-    title: 'EcoTrack AI',
+    title: 'SmartFlow',
     description: 'AI-powered carbon footprint tracking for enterprises',
     problem: 'Companies struggle to accurately measure and reduce their carbon footprint',
     proposedSolution: 'Machine learning algorithms that analyze energy consumption patterns and provide actionable insights for sustainability improvements',
     team: ['Alice Johnson', 'Bob Smith', 'Carol Lee'],
     category: 'Sustainability',
     tags: ['AI', 'Environment', 'Analytics'],
-    submissionDate: '2024-01-15'
+    submissionDate: '2024-01-15',
+    weight: 1
   },
   {
     id: 'p2',
-    title: 'HealthGuard',
+    title: 'Circular',
     description: 'Real-time health monitoring through wearable devices',
     problem: 'Early detection of health issues remains challenging for remote patients',
     proposedSolution: 'IoT wearables with ML algorithms that predict health risks and alert medical professionals in real-time',
     team: ['Dr. Jennifer Wilson', 'Tom Anderson', 'Maria Garcia'],
     category: 'Healthcare',
     tags: ['IoT', 'Healthcare', 'Wearables'],
-    submissionDate: '2024-01-16'
+    submissionDate: '2024-01-16',
+    weight: 2
   },
   {
     id: 'p3',
-    title: 'SmartFarm Pro',
+    title: 'Café',
     description: 'Precision agriculture using drone technology and IoT sensors',
     problem: 'Traditional farming methods are inefficient and environmentally harmful',
     proposedSolution: 'Autonomous drones with multispectral cameras and soil sensors for precise crop management and optimization',
     team: ['Robert Taylor', 'Susan Martinez', 'James Thompson'],
     category: 'Agriculture',
     tags: ['Drones', 'IoT', 'Agriculture'],
-    submissionDate: '2024-01-17'
+    submissionDate: '2024-01-17',
+    weight: 3
   },
   {
     id: 'p4',
-    title: 'CyberShield',
+    title: 'Autohealth',
     description: 'Advanced threat detection using quantum-resistant encryption',
     problem: 'Current cybersecurity measures are vulnerable to quantum computing attacks',
     proposedSolution: 'Next-generation encryption protocols combined with AI-powered threat detection for enterprise security',
     team: ['Alex Chen', 'Rachel Kim', 'Michael Brown'],
     category: 'Cybersecurity',
     tags: ['Security', 'Encryption', 'AI'],
-    submissionDate: '2024-01-18'
+    submissionDate: '2024-01-18',
+    weight: 4
   },
   {
     id: 'p5',
-    title: 'EduVR Platform',
+    title: 'Emprende',
     description: 'Immersive virtual reality education platform',
     problem: 'Remote learning lacks engagement and hands-on experience',
     proposedSolution: 'VR platform that creates immersive educational experiences for complex subjects like science and history',
     team: ['Lisa Davis', 'Kevin Wong', 'Sarah Johnson'],
     category: 'Education',
     tags: ['VR', 'Education', 'Immersive'],
-    submissionDate: '2024-01-19'
+    submissionDate: '2024-01-19',
+    weight: 5
   },
   {
     id: 'p6',
-    title: 'GreenEnergy Grid',
+    title: 'Newtech',
     description: 'Smart grid optimization for renewable energy distribution',
     problem: 'Renewable energy distribution is inefficient due to unpredictable generation patterns',
     proposedSolution: 'AI-optimized smart grid that predicts energy demand and optimizes renewable energy distribution',
     team: ['Daniel Park', 'Emma Wilson', 'Chris Lee'],
     category: 'Energy',
     tags: ['Smart Grid', 'Renewable', 'AI'],
-    submissionDate: '2024-01-20'
+    submissionDate: '2024-01-20',
+    weight: 6
   },
   {
     id: 'p7',
-    title: 'MedAssist AI',
+    title: 'Migratio',
     description: 'AI-powered diagnostic assistant for healthcare professionals',
     problem: 'Medical diagnosis can be time-consuming and prone to human error',
     proposedSolution: 'Machine learning model trained on medical imaging and patient data to assist doctors in faster, more accurate diagnoses',
     team: ['Dr. Patricia Moore', 'Andrew Kim', 'Nicole Zhang'],
     category: 'Healthcare',
     tags: ['AI', 'Medical', 'Diagnostics'],
-    submissionDate: '2024-01-21'
+    submissionDate: '2024-01-21',
+    weight: 7
   },
   {
     id: 'p8',
-    title: 'FinSecure Blockchain',
+    title: 'Ethylock',
     description: 'Decentralized financial security platform',
     problem: 'Traditional banking systems are vulnerable to fraud and lack transparency',
     proposedSolution: 'Blockchain-based platform with smart contracts for secure, transparent financial transactions',
     team: ['John Miller', 'Anna Rodriguez', 'Peter Chen'],
     category: 'Fintech',
     tags: ['Blockchain', 'Security', 'Finance'],
-    submissionDate: '2024-01-22'
+    submissionDate: '2024-01-22',
+    weight: 8
   },
   {
     id: 'p9',
@@ -106,7 +114,8 @@ export const mockProjects: Project[] = [
     team: ['Maria Santos', 'Thomas Liu', 'Jennifer Adams'],
     category: 'Water Tech',
     tags: ['Nanotechnology', 'Water', 'Purification'],
-    submissionDate: '2024-01-23'
+    submissionDate: '2024-01-23',
+    weight: 9
   },
   {
     id: 'p10',
@@ -117,7 +126,8 @@ export const mockProjects: Project[] = [
     team: ['Robert Zhang', 'Lisa Thompson', 'Carlos Mendez'],
     category: 'Smart Cities',
     tags: ['AI', 'Traffic', 'IoT'],
-    submissionDate: '2024-01-24'
+    submissionDate: '2024-01-24',
+    weight: 10
   },
   {
     id: 'p11',
@@ -128,7 +138,8 @@ export const mockProjects: Project[] = [
     team: ['Dr. Steven Clark', 'Amy Wang', 'Jacob Torres'],
     category: 'Aerospace',
     tags: ['Satellite', 'Connectivity', 'Space'],
-    submissionDate: '2024-01-25'
+    submissionDate: '2024-01-25',
+    weight: 11
   },
   {
     id: 'p12',
@@ -139,7 +150,8 @@ export const mockProjects: Project[] = [
     team: ['Helen Cooper', 'Mark Johnson', 'Diana Kim'],
     category: 'Renewable Energy',
     tags: ['Biogas', 'Waste', 'Renewable'],
-    submissionDate: '2024-01-26'
+    submissionDate: '2024-01-26',
+    weight: 12
   },
   {
     id: 'p13',
@@ -150,7 +162,8 @@ export const mockProjects: Project[] = [
     team: ['Dr. Richard Gold', 'Sophia Martinez', 'Eric Chen'],
     category: 'Neurotechnology',
     tags: ['BCI', 'Rehabilitation', 'Neuroscience'],
-    submissionDate: '2024-01-27'
+    submissionDate: '2024-01-27',
+    weight: 13
   },
   {
     id: 'p14',
@@ -161,7 +174,8 @@ export const mockProjects: Project[] = [
     team: ['Dr. Michelle Lee', 'Paul Rodriguez', 'Karen Wang'],
     category: 'Climate Tech',
     tags: ['Climate', 'ML', 'Prediction'],
-    submissionDate: '2024-01-28'
+    submissionDate: '2024-01-28',
+    weight: 14
   },
   {
     id: 'p15',
@@ -172,7 +186,8 @@ export const mockProjects: Project[] = [
     team: ['Grace Liu', 'Tony Anderson', 'Elena Petrov'],
     category: 'Robotics',
     tags: ['Robotics', 'AI', 'Elderly Care'],
-    submissionDate: '2024-01-29'
+    submissionDate: '2024-01-29',
+    weight: 15
   }
 ];
 
