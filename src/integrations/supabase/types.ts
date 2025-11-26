@@ -40,40 +40,40 @@ export type Database = {
       }
       projects: {
         Row: {
-          category: string
+          category: string | null
           created_at: string | null
           description: string
           id: string
-          problem: string
+          problem: string | null
           proposed_solution: string
           submission_date: string | null
-          tags: string[]
+          tags: string[] | null
           team: string[]
           title: string
           weight: number | null
         }
         Insert: {
-          category: string
+          category?: string | null
           created_at?: string | null
           description: string
           id?: string
-          problem: string
+          problem?: string | null
           proposed_solution: string
           submission_date?: string | null
-          tags?: string[]
+          tags?: string[] | null
           team?: string[]
           title: string
           weight?: number | null
         }
         Update: {
-          category?: string
+          category?: string | null
           created_at?: string | null
           description?: string
           id?: string
-          problem?: string
+          problem?: string | null
           proposed_solution?: string
           submission_date?: string | null
-          tags?: string[]
+          tags?: string[] | null
           team?: string[]
           title?: string
           weight?: number | null
