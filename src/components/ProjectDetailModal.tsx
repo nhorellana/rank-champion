@@ -48,7 +48,7 @@ export const ProjectDetailModal = ({
             <span className={`text-sm font-medium ${getRankColor(projectScore.rank)}`}>
               Posición #{projectScore.rank}
             </span>
-            <Badge variant="outline">{project.category}</Badge>
+            {project.category && <Badge variant="outline">{project.category}</Badge>}
             {finalistsVotes > 0 && (
               <Badge variant="outline" className="bg-innovation/20 text-innovation border-innovation">
                 <Star className="h-3 w-3 mr-1" />
@@ -79,10 +79,12 @@ export const ProjectDetailModal = ({
                     <span>{project.team.join(", ")}</span>
                   </div>
                 </div>
-                <div>
-                  <h4 className="font-semibold text-foreground mb-2">Categoría</h4>
-                  <p className="text-muted-foreground">{project.problem}</p>
-                </div>
+                {project.problem && (
+                  <div>
+                    <h4 className="font-semibold text-foreground mb-2">Categoría</h4>
+                    <p className="text-muted-foreground">{project.problem}</p>
+                  </div>
+                )}
               </CardContent>
             </Card>
 
@@ -98,23 +100,25 @@ export const ProjectDetailModal = ({
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <TagIcon className="h-5 w-5 text-primary" />
-                  Etiquetas
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="flex flex-wrap gap-2">
-                  {project.tags.map((tag) => (
-                    <Badge key={tag} variant="outline">
-                      {tag}
-                    </Badge>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+            {project.tags && project.tags.length > 0 && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <TagIcon className="h-5 w-5 text-primary" />
+                    Etiquetas
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex flex-wrap gap-2">
+                    {project.tags.map((tag) => (
+                      <Badge key={tag} variant="outline">
+                        {tag}
+                      </Badge>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
 
             <Card>
               <CardHeader>
@@ -127,19 +131,19 @@ export const ProjectDetailModal = ({
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   <div className="bg-muted/50 rounded-lg p-3 text-center">
-                    <div className="text-xs text-muted-foreground">Impacto</div>
+                    <div className="text-xs text-muted-foreground">Creatividad</div>
                     <div className="text-lg font-semibold text-primary">{projectScore.averageA}</div>
                   </div>
                   <div className="bg-muted/50 rounded-lg p-3 text-center">
-                    <div className="text-xs text-muted-foreground">Factibilidad</div>
+                    <div className="text-xs text-muted-foreground">Métricas</div>
                     <div className="text-lg font-semibold text-primary">{projectScore.averageB}</div>
                   </div>
                   <div className="bg-muted/50 rounded-lg p-3 text-center">
-                    <div className="text-xs text-muted-foreground">Equipo</div>
+                    <div className="text-xs text-muted-foreground">Creatividad</div>
                     <div className="text-lg font-semibold text-primary">{projectScore.averageC}</div>
                   </div>
                   <div className="bg-muted/50 rounded-lg p-3 text-center">
-                    <div className="text-xs text-muted-foreground">Valor</div>
+                    <div className="text-xs text-muted-foreground">Pitch</div>
                     <div className="text-lg font-semibold text-primary">{projectScore.averageD}</div>
                   </div>
                 </div>
@@ -173,19 +177,19 @@ export const ProjectDetailModal = ({
                         <>
                           <div className="grid grid-cols-2 gap-2 text-xs">
                             <div className="text-center">
-                              <div className="text-muted-foreground">Impacto</div>
+                              <div className="text-muted-foreground">Creatividad</div>
                               <div className="font-semibold text-primary">{judgeScore.categoryA}</div>
                             </div>
                             <div className="text-center">
-                              <div className="text-muted-foreground">Factibilidad</div>
+                              <div className="text-muted-foreground">Métricas</div>
                               <div className="font-semibold text-primary">{judgeScore.categoryB}</div>
                             </div>
                             <div className="text-center">
-                              <div className="text-muted-foreground">Equipo</div>
+                              <div className="text-muted-foreground">Creatividad</div>
                               <div className="font-semibold text-primary">{judgeScore.categoryC}</div>
                             </div>
                             <div className="text-center">
-                              <div className="text-muted-foreground">Valor</div>
+                              <div className="text-muted-foreground">Pitch</div>
                               <div className="font-semibold text-primary">{judgeScore.categoryD}</div>
                             </div>
                           </div>

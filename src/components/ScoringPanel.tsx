@@ -2,13 +2,14 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Slider } from "@/components/ui/slider";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Project, Judge, Score } from "@/types/contest";
 import { Save, Star } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
+import { render } from "react-dom";
 
 interface ScoringPanelProps {
   projects: Project[];
@@ -129,6 +130,23 @@ export const ScoringPanel = ({ projects, judges, scores, onUpdateScore }: Scorin
   const selectedJudgeData = judges.find(j => j.id === selectedJudge);
   const totalScore = ((categoryA + categoryB + categoryC + categoryD) / 4).toFixed(2);
 
+  const renderValueLabel = (value: number) => {
+    switch (value) {
+      case 1:
+        return "Muy débil";
+      case 2:
+        return "Débil";
+      case 3:
+        return "Aceptable";
+      case 4:
+        return "Bueno";
+      case 5:
+        return "Excelente";
+      default:
+        return value.toString();
+    }
+  };
+
   return (
     <div className="space-y-6">
       <Card>
@@ -170,7 +188,9 @@ export const ScoringPanel = ({ projects, judges, scores, onUpdateScore }: Scorin
                     <SelectItem key={project.id} value={project.id}>
                       <div>
                         <div className="font-medium">{project.title}</div>
-                        <div className="text-xs text-muted-foreground">{project.category}</div>
+                        {project.category && (
+                          <div className="text-xs text-muted-foreground">{project.category}</div>
+                        )}
                       </div>
                     </SelectItem>
                   ))}
@@ -181,12 +201,25 @@ export const ScoringPanel = ({ projects, judges, scores, onUpdateScore }: Scorin
 
           {selectedProjectData && (
             <Card className="bg-muted/30">
-              <CardContent className="p-4">
-                <div className="flex items-center gap-2 mb-2">
-                  <h3 className="font-semibold">{selectedProjectData.title}</h3>
-                  <Badge variant="outline">{selectedProjectData.category}</Badge>
+              <CardContent className="p-4 space-y-3">
+                <div className="flex items-center gap-2">
+                  <h3 className="font-semibold text-2xl">{selectedProjectData.title}</h3>
+                  {selectedProjectData.category && (
+                    <Badge variant="outline">{selectedProjectData.category}</Badge>
+                  )}
                 </div>
-                <p className="text-sm text-muted-foreground">{selectedProjectData.description}</p>
+                <div>
+                  <h4 className="text-sm font-bold mb-1">Descripción</h4>
+                  <p className="text-xs text-muted-foreground">{selectedProjectData.description}</p>
+                </div>
+                <div>
+                  <h4 className="text-sm font-bold mb-1">Solución propuesta</h4>
+                  <p className="text-xs text-muted-foreground">{selectedProjectData.proposedSolution}</p>
+                </div>
+                <div>
+                  <h4 className="text-sm font-bold mb-1">Miembros del equipo</h4>
+                  <p className="text-xs text-muted-foreground">{selectedProjectData.team.join(", ")}</p>
+                </div>
               </CardContent>
             </Card>
           )}
@@ -195,69 +228,81 @@ export const ScoringPanel = ({ projects, judges, scores, onUpdateScore }: Scorin
             <div className="space-y-6">
               <div className="bg-primary/5 rounded-lg p-4">
                 <div className="text-center mb-4">
-                  <div className="text-sm text-muted-foreground">Puntaje promedio actual</div>
-                  <div className="text-2xl font-bold text-primary">{totalScore}</div>
+                  <div className="text-xl font-bold text-muted-foreground">Puntaje promedio actual:</div>
+                  <div className="text-3xl font-bold text-primary">{totalScore}</div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <label className="text-sm font-medium flex items-center justify-between">
-                      Impacto
-                      <span className="text-primary font-bold">{categoryA}</span>
+                    <label className="text-sm font-medium">
+                      Equipo: La startup tiene un buen equipo, con roles complementarios
                     </label>
-                    <Slider
-                      value={[categoryA]}
-                      onValueChange={(value) => setCategoryA(value[0])}
-                      max={5}
-                      min={1}
-                      step={1}
-                      className="w-full"
-                    />
+                    <Select value={categoryA.toString()} onValueChange={(value) => setCategoryA(Number(value))}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecciona puntaje" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {[1, 2, 3, 4, 5].map((value) => (
+                          <SelectItem key={value} value={value.toString()}>
+                            {value}. {renderValueLabel(value)}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
 
                   <div className="space-y-2">
-                    <label className="text-sm font-medium flex items-center justify-between">
-                      Factibilidad
-                      <span className="text-primary font-bold">{categoryB}</span>
+                    <label className="text-sm font-medium">
+                      Métricas: Tiene cifras sanas y positivas
                     </label>
-                    <Slider
-                      value={[categoryB]}
-                      onValueChange={(value) => setCategoryB(value[0])}
-                      max={5}
-                      min={1}
-                      step={1}
-                      className="w-full"
-                    />
+                    <Select value={categoryB.toString()} onValueChange={(value) => setCategoryB(Number(value))}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecciona puntaje" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {[1, 2, 3, 4, 5].map((value) => (
+                          <SelectItem key={value} value={value.toString()}>
+                            {value}. {renderValueLabel(value)}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
 
                   <div className="space-y-2">
-                    <label className="text-sm font-medium flex items-center justify-between">
-                      Equipo
-                      <span className="text-primary font-bold">{categoryC}</span>
+                    <label className="text-sm font-medium">
+                      Creatividad: Presentan una solución novedosa a un problema real
                     </label>
-                    <Slider
-                      value={[categoryC]}
-                      onValueChange={(value) => setCategoryC(value[0])}
-                      max={5}
-                      min={1}
-                      step={1}
-                      className="w-full"
-                    />
+                    <Select value={categoryC.toString()} onValueChange={(value) => setCategoryC(Number(value))}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecciona puntaje" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {[1, 2, 3, 4, 5].map((value) => (
+                          <SelectItem key={value} value={value.toString()}>
+                            {value}. {renderValueLabel(value)}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
 
                   <div className="space-y-2">
-                    <label className="text-sm font-medium flex items-center justify-between">
-                      Valor
-                      <span className="text-primary font-bold">{categoryD}</span>
+                    <label className="text-sm font-medium">
+                      Pitch: Sabe vender bien su idea
                     </label>
-                    <Slider
-                      value={[categoryD]}
-                      onValueChange={(value) => setCategoryD(value[0])}
-                      max={5}
-                      min={1}
-                      step={1}
-                      className="w-full"
-                    />
+                    <Select value={categoryD.toString()} onValueChange={(value) => setCategoryD(Number(value))}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecciona puntaje" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {[1, 2, 3, 4, 5].map((value) => (
+                          <SelectItem key={value} value={value.toString()}>
+                            {value}. {renderValueLabel(value)}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
                 </div>
               </div>
@@ -273,7 +318,7 @@ export const ScoringPanel = ({ projects, judges, scores, onUpdateScore }: Scorin
                   />
                 </div>
 
-                <div className="flex items-start mt-2 space-x-2 p-4 border rounded-lg">
+                {/* <div className="flex items-start mt-2 space-x-2 p-4 border rounded-lg">
                   <Checkbox
                     id="me-la-juego"
                     checked={melaJuego}
@@ -290,7 +335,7 @@ export const ScoringPanel = ({ projects, judges, scores, onUpdateScore }: Scorin
                       Marca esta opción si consideras que este proyecto tiene excepcional potencial
                     </p>
                   </div>
-                </div>
+                </div> */}
               </div>
 
               <div className="flex flex-col md:flex-row gap-4">

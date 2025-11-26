@@ -2,11 +2,11 @@ export interface Project {
   id: string;
   title: string;
   description: string;
-  problem: string;
+  problem?: string;
   proposedSolution: string;
   team: string[];
-  category: string;
-  tags: string[];
+  category?: string;
+  tags?: string[];
   submissionDate: string;
   weight: number;
 }

@@ -20,9 +20,11 @@ export const ProjectCard = ({ project, projectScore, onViewDetails, votesDone, t
           <h3 className="text-lg font-semibold text-foreground line-clamp-1">
             {project.title}
           </h3>
-          <Badge variant="outline" className="text-xs">
-            {project.category}
-          </Badge>
+          {project.category && (
+            <Badge variant="outline" className="text-xs">
+              {project.category}
+            </Badge>
+          )}
         </div>
         <p className="text-sm text-muted-foreground line-clamp-2">
           {project.description}
@@ -41,21 +43,21 @@ export const ProjectCard = ({ project, projectScore, onViewDetails, votesDone, t
             </div>
           </div>
 
-          <div className="grid grid-cols-4 gap-2 text-center">
+          <div className="grid md:grid-cols-4 grid-cols-2 gap-2 text-center">
             <div className="bg-muted/50 rounded-lg p-2">
-              <div className="text-xs text-muted-foreground">Impacto</div>
+              <div className="text-xs text-muted-foreground">Equipo</div>
               <div className="text-sm font-semibold text-primary">{projectScore.averageA}</div>
             </div>
             <div className="bg-muted/50 rounded-lg p-2">
-              <div className="text-xs text-muted-foreground">Factibilidad</div>
+              <div className="text-xs text-muted-foreground">Métricas</div>
               <div className="text-sm font-semibold text-primary">{projectScore.averageB}</div>
             </div>
             <div className="bg-muted/50 rounded-lg p-2">
-              <div className="text-xs text-muted-foreground">Equipo</div>
+              <div className="text-xs text-muted-foreground">Creatividad</div>
               <div className="text-sm font-semibold text-primary">{projectScore.averageC}</div>
             </div>
             <div className="bg-muted/50 rounded-lg p-2">
-              <div className="text-xs text-muted-foreground">Valor</div>
+              <div className="text-xs text-muted-foreground">Pitch</div>
               <div className="text-sm font-semibold text-primary">{projectScore.averageD}</div>
             </div>
           </div>
@@ -65,20 +67,22 @@ export const ProjectCard = ({ project, projectScore, onViewDetails, votesDone, t
             <div className="text-xl font-bold text-primary">{projectScore.totalAverage}</div>
           </div>
 
-          <div className="flex flex-col gap-1.5">
-            {project.tags.slice(0, 3).map((tag) => (
-              <div className="w-fit">
-                <Badge key={tag} variant="outline" className="text-xs">
-                  {tag}
+          {project.tags && project.tags.length > 0 && (
+            <div className="flex flex-col gap-1.5">
+              {project.tags.slice(0, 3).map((tag) => (
+                <div className="w-fit">
+                  <Badge key={tag} variant="outline" className="text-xs">
+                    {tag}
+                  </Badge>
+                </div>
+              ))}
+              {project.tags.length > 3 && (
+                <Badge variant="outline" className="text-xs">
+                  +{project.tags.length - 3}
                 </Badge>
-              </div>
-            ))}
-            {project.tags.length > 3 && (
-              <Badge variant="outline" className="text-xs">
-                +{project.tags.length - 3}
-              </Badge>
-            )}
-          </div>
+              )}
+            </div>
+          )}
 
           <Button
             onClick={() => onViewDetails(project)}
