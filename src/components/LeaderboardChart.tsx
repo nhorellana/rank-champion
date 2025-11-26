@@ -139,7 +139,7 @@ export const LeaderboardChart = ({ projectScores, projects, judges, scores }: Le
 
                   <div className="grid grid-cols-2 gap-1 mt-3 text-xs">
                     <div className="text-center">
-                      <div className="text-muted-foreground">Creatividad</div>
+                      <div className="text-muted-foreground">Equipo</div>
                       <div className="font-semibold">{score.averageA}</div>
                     </div>
                     <div className="text-center">
@@ -213,7 +213,7 @@ export const LeaderboardChart = ({ projectScores, projects, judges, scores }: Le
                   }}
                 />
                 <Legend />
-                <Bar dataKey="categoryA" fill="hsl(var(--primary))" name="Creatividad" />
+                <Bar dataKey="categoryA" fill="hsl(var(--primary))" name="Equipo" />
                 <Bar dataKey="categoryB" fill="hsl(var(--innovation))" name="Métricas" />
                 <Bar dataKey="categoryC" fill="hsl(var(--innovation-tertiary))" name="Creatividad" />
                 <Bar dataKey="categoryD" fill="hsl(var(--success))" name="Pitch" />
@@ -263,7 +263,7 @@ export const LeaderboardChart = ({ projectScores, projects, judges, scores }: Le
                     </div>
                     <div className="grid grid-cols-4 gap-2 text-xs text-center">
                       <div>
-                        <div className="text-muted-foreground">Creatividad</div>
+                        <div className="text-muted-foreground">Equipo</div>
                         <div className="font-semibold">{score.averageA}</div>
                       </div>
                       <div>

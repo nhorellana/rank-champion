@@ -54,24 +54,13 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       {/* Header */}
       <div className="border-b border-border/50 bg-card/30 backdrop-blur-sm sticky top-0 z-10">
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex flex-col md:flex-row items-center justify-between">
-            <div className="flex flex-col md:flex-row items-center gap-1 md:gap-3">
-              {/* <img src="/logo-copec.png" alt="Copec" className="w-40" /> */}
-              <img src="/logo_df_mas_pitch_negro.svg" alt="DF Más Pitch" className="w-24" />
-              {/* <div>
-                <h1 className="text-2xl font-bold text-foreground">DF Más Pitch</h1>
-                <p className="text-sm text-muted-foreground">
-                  Competencia de startups
-                </p>
-              </div> */}
-            </div>
-            <div className="flex items-center gap-4">
-              <div className="hidden md:block md:text-right">
-                <div className="text-sm text-muted-foreground">Total de proyectos</div>
-                <div className="text-xl font-bold text-primary">{projects.length}</div>
-              </div>
-            </div>
+        <div className="container mx-auto px-6 md:py-4">
+          <div className="flex md:hidden items-center justify-center">
+            <img src="/logos-juntos.png" alt="Copec" className="w-52" />
+          </div>
+          <div className="hidden md:flex items-center justify-between">
+            <img src="/logo_df_mas_pitch_negro.svg" alt="DF Más Pitch" className="w-24" />
+            <img src="/logo-copec.png" alt="Copec" className="w-40" />
           </div>
         </div>
       </div>
@@ -101,7 +90,7 @@ const Index = () => {
                 <div>
                   <p className="text-sm text-muted-foreground">Categorías</p>
                   <p className="text-lg font-semibold text-foreground">4</p>
-                  <p className="text-sm text-primary">Creatividad, Métricas, Creatividad, Pitch</p>
+                  <p className="text-sm text-primary">Equipo, Métricas, Creatividad, Pitch</p>
                 </div>
               </div>
             </CardContent>

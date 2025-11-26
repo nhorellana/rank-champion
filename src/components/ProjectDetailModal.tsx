@@ -131,7 +131,7 @@ export const ProjectDetailModal = ({
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   <div className="bg-muted/50 rounded-lg p-3 text-center">
-                    <div className="text-xs text-muted-foreground">Creatividad</div>
+                    <div className="text-xs text-muted-foreground">Equipo</div>
                     <div className="text-lg font-semibold text-primary">{projectScore.averageA}</div>
                   </div>
                   <div className="bg-muted/50 rounded-lg p-3 text-center">
@@ -177,7 +177,7 @@ export const ProjectDetailModal = ({
                         <>
                           <div className="grid grid-cols-2 gap-2 text-xs">
                             <div className="text-center">
-                              <div className="text-muted-foreground">Creatividad</div>
+                              <div className="text-muted-foreground">Equipo</div>
                               <div className="font-semibold text-primary">{judgeScore.categoryA}</div>
                             </div>
                             <div className="text-center">
