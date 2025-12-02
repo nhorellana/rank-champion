@@ -24,7 +24,7 @@ export const PasswordGate = ({ onCorrectPassword }: PasswordGateProps) => {
     // Small delay for UX
     await new Promise(resolve => setTimeout(resolve, 500));
 
-    if (password === "desafiocopec2025") {
+    if (password === "copec90") {
       localStorage.setItem("contestAccess", "granted");
       onCorrectPassword();
     } else {
