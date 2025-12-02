@@ -134,9 +134,7 @@ export const LeaderboardChart = ({ projectScores, projects, judges, scores }: Le
                     </span>
                   </div>
                   <h3 className="font-semibold text-foreground mb-1">{project?.title}</h3>
-                  <Badge variant="default" className="mb-2">{project?.category}</Badge>
                   <div className="text-2xl font-bold text-primary">{score.totalAverage} / 5</div>
-
                   <div className="grid grid-cols-2 gap-1 mt-3 text-xs">
                     <div className="text-center">
                       <div className="text-muted-foreground">Equipo</div>
@@ -223,7 +221,7 @@ export const LeaderboardChart = ({ projectScores, projects, judges, scores }: Le
         </CardContent>
       </Card>
 
-            {/* Full Rankings */}
+      {/* Full Rankings */}
       <Card>
         <CardHeader>
           <CardTitle>
@@ -237,30 +235,69 @@ export const LeaderboardChart = ({ projectScores, projects, judges, scores }: Le
               return (
                 <div
                   key={score.projectId}
-                  className="flex items-center justify-between p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors"
+                  className="p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors"
                 >
-                  <div className="flex items-center gap-3">
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center ${getRankColor(score.rank)}`}>
-                      <span className="text-sm font-bold">{score.rank}</span>
+                  {/* Desktop Layout */}
+                  <div className="hidden md:flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className={`w-8 h-8 rounded-full flex items-center justify-center ${getRankColor(score.rank)}`}>
+                        <span className="text-sm font-bold">{score.rank}</span>
+                      </div>
+                      <div>
+                        <h4 className="font-medium">{project?.title}</h4>
+                        <p className="text-xs text-muted-foreground">{project?.category}</p>
+                      </div>
                     </div>
-                    <div>
-                      <h4 className="font-medium">{project?.title}</h4>
-                      <p className="text-xs text-muted-foreground">{project?.category}</p>
+                    <div className="flex items-center gap-4">
+                      <div className="flex items-center gap-2">
+                        {getMelaJuegoCount(score.projectId) > 0 && (
+                          <div className="flex items-center gap-1 text-amber-500">
+                            <Star className="h-4 w-4 fill-current" />
+                            <span className="text-sm font-semibold">{getMelaJuegoCount(score.projectId)}</span>
+                          </div>
+                        )}
+                      </div>
+                      <div className="text-right">
+                        <div className="text-lg font-bold text-primary">{score.totalAverage}</div>
+                        <div className="text-xs text-muted-foreground">Promedio</div>
+                      </div>
+                      <div className="grid grid-cols-4 gap-2 text-xs text-center">
+                        <div>
+                          <div className="text-muted-foreground">Equipo</div>
+                          <div className="font-semibold">{score.averageA}</div>
+                        </div>
+                        <div>
+                          <div className="text-muted-foreground">Métricas</div>
+                          <div className="font-semibold">{score.averageB}</div>
+                        </div>
+                        <div>
+                          <div className="text-muted-foreground">Creatividad</div>
+                          <div className="font-semibold">{score.averageC}</div>
+                        </div>
+                        <div>
+                          <div className="text-muted-foreground">Pitch</div>
+                          <div className="font-semibold">{score.averageD}</div>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-2">
-                      {getMelaJuegoCount(score.projectId) > 0 && (
-                        <div className="flex items-center gap-1 text-amber-500">
-                          <Star className="h-4 w-4 fill-current" />
-                          <span className="text-sm font-semibold">{getMelaJuegoCount(score.projectId)}</span>
+
+                  {/* Mobile Layout */}
+                  <div className="md:hidden space-y-3">
+                    {/* Row 1: Rank - Title - Average */}
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3 flex-1 min-w-0">
+                        <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${getRankColor(score.rank)}`}>
+                          <span className="text-sm font-bold">{score.rank}</span>
                         </div>
-                      )}
+                        <h4 className="font-medium truncate">{project?.title}</h4>
+                      </div>
+                      <div className="text-right flex-shrink-0 ml-2">
+                        <div className="text-lg font-bold text-primary">{score.totalAverage}</div>
+                      </div>
                     </div>
-                    <div className="text-right">
-                      <div className="text-lg font-bold text-primary">{score.totalAverage}</div>
-                      <div className="text-xs text-muted-foreground">Promedio</div>
-                    </div>
+
+                    {/* Row 2: Category Scores */}
                     <div className="grid grid-cols-4 gap-2 text-xs text-center">
                       <div>
                         <div className="text-muted-foreground">Equipo</div>
