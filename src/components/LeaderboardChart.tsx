@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ProjectScore, Project, Judge, Score } from "@/types/contest";
-import { Trophy, TrendingUp, Award, Star } from "lucide-react";
+import { Trophy, TrendingUp, Award, Star, Lock } from "lucide-react";
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
 import { useState } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -257,7 +257,7 @@ export const LeaderboardChart = ({ projectScores, projects, judges, scores }: Le
                         <div className="text-lg font-bold text-primary">{score.totalAverage}</div>
                         <div className="text-xs text-muted-foreground">Promedio</div>
                       </div>
-                      <div className="grid grid-cols-3 gap-2 text-xs text-center">
+                      <div className="grid grid-cols-5 gap-2 text-xs text-center">
                         <div>
                           <div className="text-muted-foreground">Calidad PoC</div>
                           <div className="font-semibold">{score.averageA}</div>
@@ -269,6 +269,20 @@ export const LeaderboardChart = ({ projectScores, projects, judges, scores }: Le
                         <div>
                           <div className="text-muted-foreground">Escalabilidad</div>
                           <div className="font-semibold">{score.averageC}</div>
+                        </div>
+                        <div>
+                          <div className="flex items-center justify-center gap-0.5 text-muted-foreground">
+                            <Lock className="h-2.5 w-2.5" />
+                            <span>Eficiencia</span>
+                          </div>
+                          <div className="font-semibold">{project?.eficienciaRecursos ?? 3}</div>
+                        </div>
+                        <div>
+                          <div className="flex items-center justify-center gap-0.5 text-muted-foreground">
+                            <Lock className="h-2.5 w-2.5" />
+                            <span>Desempeño</span>
+                          </div>
+                          <div className="font-semibold">{project?.desempenoEquipo ?? 3}</div>
                         </div>
                       </div>
                     </div>
@@ -289,7 +303,7 @@ export const LeaderboardChart = ({ projectScores, projects, judges, scores }: Le
                       </div>
                     </div>
 
-                    {/* Row 2: Category Scores */}
+                    {/* Row 2: Editable Category Scores */}
                     <div className="grid grid-cols-3 gap-2 text-xs text-center">
                       <div>
                         <div className="text-muted-foreground">Calidad PoC</div>
@@ -302,6 +316,24 @@ export const LeaderboardChart = ({ projectScores, projects, judges, scores }: Le
                       <div>
                         <div className="text-muted-foreground">Escalabilidad</div>
                         <div className="font-semibold">{score.averageC}</div>
+                      </div>
+                    </div>
+
+                    {/* Row 3: Fixed Category Scores */}
+                    <div className="grid grid-cols-2 gap-2 text-xs text-center pt-1 border-t border-border/30">
+                      <div>
+                        <div className="flex items-center justify-center gap-0.5 text-muted-foreground">
+                          <Lock className="h-2.5 w-2.5" />
+                          <span>Eficiencia</span>
+                        </div>
+                        <div className="font-semibold">{project?.eficienciaRecursos ?? 3}</div>
+                      </div>
+                      <div>
+                        <div className="flex items-center justify-center gap-0.5 text-muted-foreground">
+                          <Lock className="h-2.5 w-2.5" />
+                          <span>Desempeño</span>
+                        </div>
+                        <div className="font-semibold">{project?.desempenoEquipo ?? 3}</div>
                       </div>
                     </div>
                   </div>
