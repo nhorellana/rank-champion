@@ -89,8 +89,8 @@ const Index = () => {
                 <Target className="h-8 w-8 text-primary" />
                 <div>
                   <p className="text-sm text-muted-foreground">Categorías</p>
-                  <p className="text-lg font-semibold text-foreground">4</p>
-                  <p className="text-sm text-primary">Equipo, Métricas, Creatividad, Pitch</p>
+                  <p className="text-lg font-semibold text-foreground">5</p>
+                  <p className="text-sm text-primary">Calidad PoC, Validación, Escalabilidad, Eficiencia, Desempeño</p>
                 </div>
               </div>
             </CardContent>

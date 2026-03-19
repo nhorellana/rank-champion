@@ -7,7 +7,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Project, ProjectScore, Judge, Score } from "@/types/contest";
-import { Users, Calendar, Trophy, Target, Lightbulb, TagIcon, Star, MessageSquare } from "lucide-react";
+import { Users, Trophy, Target, Lightbulb, TagIcon, Star, MessageSquare, Lock } from "lucide-react";
 
 interface ProjectDetailModalProps {
   project: Project | null;
@@ -131,20 +131,35 @@ export const ProjectDetailModal = ({
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   <div className="bg-muted/50 rounded-lg p-3 text-center">
-                    <div className="text-xs text-muted-foreground">Equipo</div>
+                    <div className="text-xs text-muted-foreground">Calidad PoC</div>
+                    <div className="text-xs text-muted-foreground/70">30%</div>
                     <div className="text-lg font-semibold text-primary">{projectScore.averageA}</div>
                   </div>
                   <div className="bg-muted/50 rounded-lg p-3 text-center">
-                    <div className="text-xs text-muted-foreground">Métricas</div>
+                    <div className="text-xs text-muted-foreground">Validación</div>
+                    <div className="text-xs text-muted-foreground/70">20%</div>
                     <div className="text-lg font-semibold text-primary">{projectScore.averageB}</div>
                   </div>
                   <div className="bg-muted/50 rounded-lg p-3 text-center">
-                    <div className="text-xs text-muted-foreground">Creatividad</div>
+                    <div className="text-xs text-muted-foreground">Escalabilidad</div>
+                    <div className="text-xs text-muted-foreground/70">10%</div>
                     <div className="text-lg font-semibold text-primary">{projectScore.averageC}</div>
                   </div>
-                  <div className="bg-muted/50 rounded-lg p-3 text-center">
-                    <div className="text-xs text-muted-foreground">Pitch</div>
-                    <div className="text-lg font-semibold text-primary">{projectScore.averageD}</div>
+                  <div className="bg-muted/50 rounded-lg p-3 text-center border border-border/30">
+                    <div className="flex items-center justify-center gap-1">
+                      <Lock className="h-3 w-3 text-muted-foreground" />
+                      <div className="text-xs text-muted-foreground">Eficiencia Recursos</div>
+                    </div>
+                    <div className="text-xs text-muted-foreground/70">10%</div>
+                    <div className="text-lg font-semibold text-primary">{project.eficienciaRecursos}</div>
+                  </div>
+                  <div className="bg-muted/50 rounded-lg p-3 text-center border border-border/30 col-span-2">
+                    <div className="flex items-center justify-center gap-1">
+                      <Lock className="h-3 w-3 text-muted-foreground" />
+                      <div className="text-xs text-muted-foreground">Desempeño del Equipo</div>
+                    </div>
+                    <div className="text-xs text-muted-foreground/70">30%</div>
+                    <div className="text-lg font-semibold text-primary">{project.desempenoEquipo}</div>
                   </div>
                 </div>
               </CardContent>
@@ -175,22 +190,18 @@ export const ProjectDetailModal = ({
 
                       {judgeScore ? (
                         <>
-                          <div className="grid grid-cols-2 gap-2 text-xs">
+                          <div className="grid grid-cols-3 gap-2 text-xs">
                             <div className="text-center">
-                              <div className="text-muted-foreground">Equipo</div>
+                              <div className="text-muted-foreground">Calidad PoC</div>
                               <div className="font-semibold text-primary">{judgeScore.categoryA}</div>
                             </div>
                             <div className="text-center">
-                              <div className="text-muted-foreground">Métricas</div>
+                              <div className="text-muted-foreground">Validación</div>
                               <div className="font-semibold text-primary">{judgeScore.categoryB}</div>
                             </div>
                             <div className="text-center">
-                              <div className="text-muted-foreground">Creatividad</div>
+                              <div className="text-muted-foreground">Escalabilidad</div>
                               <div className="font-semibold text-primary">{judgeScore.categoryC}</div>
-                            </div>
-                            <div className="text-center">
-                              <div className="text-muted-foreground">Pitch</div>
-                              <div className="font-semibold text-primary">{judgeScore.categoryD}</div>
                             </div>
                           </div>
 

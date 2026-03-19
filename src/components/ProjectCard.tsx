@@ -43,22 +43,18 @@ export const ProjectCard = ({ project, projectScore, onViewDetails, votesDone, t
             </div>
           </div>
 
-          <div className="grid md:grid-cols-4 grid-cols-2 gap-2 text-center">
+          <div className="grid grid-cols-3 gap-2 text-center">
             <div className="bg-muted/50 rounded-lg p-2">
-              <div className="text-xs text-muted-foreground">Equipo</div>
+              <div className="text-xs text-muted-foreground">Calidad PoC</div>
               <div className="text-sm font-semibold text-primary">{projectScore.averageA}</div>
             </div>
             <div className="bg-muted/50 rounded-lg p-2">
-              <div className="text-xs text-muted-foreground">Métricas</div>
+              <div className="text-xs text-muted-foreground">Validación</div>
               <div className="text-sm font-semibold text-primary">{projectScore.averageB}</div>
             </div>
             <div className="bg-muted/50 rounded-lg p-2">
-              <div className="text-xs text-muted-foreground">Creatividad</div>
+              <div className="text-xs text-muted-foreground">Escalabilidad</div>
               <div className="text-sm font-semibold text-primary">{projectScore.averageC}</div>
-            </div>
-            <div className="bg-muted/50 rounded-lg p-2">
-              <div className="text-xs text-muted-foreground">Pitch</div>
-              <div className="text-sm font-semibold text-primary">{projectScore.averageD}</div>
             </div>
           </div>
 

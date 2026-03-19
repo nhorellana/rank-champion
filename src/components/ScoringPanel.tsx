@@ -2,14 +2,11 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Project, Judge, Score } from "@/types/contest";
-import { Save, Star } from "lucide-react";
+import { Save, Star, Lock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Textarea } from "@/components/ui/textarea";
-import { Checkbox } from "@/components/ui/checkbox";
-import { render } from "react-dom";
 
 interface ScoringPanelProps {
   projects: Project[];
@@ -24,7 +21,6 @@ export const ScoringPanel = ({ projects, judges, scores, onUpdateScore }: Scorin
   const [categoryA, setCategoryA] = useState<number>(1);
   const [categoryB, setCategoryB] = useState<number>(1);
   const [categoryC, setCategoryC] = useState<number>(1);
-  const [categoryD, setCategoryD] = useState<number>(1);
   const [comment, setComment] = useState<string>("");
   const [melaJuego, setMelaJuego] = useState<boolean>(false);
   const { toast } = useToast();
@@ -38,14 +34,12 @@ export const ScoringPanel = ({ projects, judges, scores, onUpdateScore }: Scorin
       setCategoryA(currentScore.categoryA);
       setCategoryB(currentScore.categoryB);
       setCategoryC(currentScore.categoryC);
-      setCategoryD(currentScore.categoryD);
       setComment(currentScore.comment || "");
       setMelaJuego(currentScore.melaJuego);
     } else {
       setCategoryA(1);
       setCategoryB(1);
       setCategoryC(1);
-      setCategoryD(1);
       setComment("");
       setMelaJuego(false);
     }
@@ -59,15 +53,12 @@ export const ScoringPanel = ({ projects, judges, scores, onUpdateScore }: Scorin
         setCategoryA(score.categoryA);
         setCategoryB(score.categoryB);
         setCategoryC(score.categoryC);
-        setCategoryD(score.categoryD);
-          setComment(score.comment || "");
+        setComment(score.comment || "");
         setMelaJuego(score.melaJuego);
       } else {
-        // Reset to default values when no existing score is found
         setCategoryA(5);
         setCategoryB(5);
         setCategoryC(5);
-        setCategoryD(5);
         setComment("");
         setMelaJuego(false);
       }
@@ -82,14 +73,12 @@ export const ScoringPanel = ({ projects, judges, scores, onUpdateScore }: Scorin
         setCategoryA(score.categoryA);
         setCategoryB(score.categoryB);
         setCategoryC(score.categoryC);
-        setCategoryD(score.categoryD);
         setComment(score.comment || "");
         setMelaJuego(score.melaJuego);
       } else {
         setCategoryA(1);
         setCategoryB(1);
         setCategoryC(1);
-        setCategoryD(1);
         setComment("");
         setMelaJuego(false);
       }
@@ -112,7 +101,6 @@ export const ScoringPanel = ({ projects, judges, scores, onUpdateScore }: Scorin
       categoryA,
       categoryB,
       categoryC,
-      categoryD,
       lastUpdated: new Date().toISOString(),
       comment,
       melaJuego,
@@ -128,22 +116,19 @@ export const ScoringPanel = ({ projects, judges, scores, onUpdateScore }: Scorin
 
   const selectedProjectData = projects.find(p => p.id === selectedProject);
   const selectedJudgeData = judges.find(j => j.id === selectedJudge);
-  const totalScore = ((categoryA + categoryB + categoryC + categoryD) / 4).toFixed(2);
+
+  const eficiencia = selectedProjectData?.eficienciaRecursos ?? 3;
+  const desempeno = selectedProjectData?.desempenoEquipo ?? 3;
+  const totalScore = ((categoryA * 30 + categoryB * 20 + categoryC * 10 + eficiencia * 10 + desempeno * 30) / 100).toFixed(2);
 
   const renderValueLabel = (value: number) => {
     switch (value) {
-      case 1:
-        return "Muy débil";
-      case 2:
-        return "Débil";
-      case 3:
-        return "Aceptable";
-      case 4:
-        return "Bueno";
-      case 5:
-        return "Excelente";
-      default:
-        return value.toString();
+      case 1: return "Muy débil";
+      case 2: return "Débil";
+      case 3: return "Aceptable";
+      case 4: return "Bueno";
+      case 5: return "Excelente";
+      default: return value.toString();
     }
   };
 
@@ -168,8 +153,8 @@ export const ScoringPanel = ({ projects, judges, scores, onUpdateScore }: Scorin
                   {judges.map((judge) => (
                     <SelectItem key={judge.id} value={judge.id}>
                       <div className="flex flex-col items-start">
-                          <div className="font-medium">{judge.name}</div>
-                          <div className="text-xs text-muted-foreground">{judge.expertise}</div>
+                        <div className="font-medium">{judge.name}</div>
+                        <div className="text-xs text-muted-foreground">{judge.expertise}</div>
                       </div>
                     </SelectItem>
                   ))}
@@ -228,14 +213,15 @@ export const ScoringPanel = ({ projects, judges, scores, onUpdateScore }: Scorin
             <div className="space-y-6">
               <div className="bg-primary/5 rounded-lg p-4">
                 <div className="text-center mb-4">
-                  <div className="text-xl font-bold text-muted-foreground">Puntaje promedio actual:</div>
+                  <div className="text-xl font-bold text-muted-foreground">Puntaje ponderado actual:</div>
                   <div className="text-3xl font-bold text-primary">{totalScore}</div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Editable categories */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                   <div className="space-y-2">
                     <label className="text-sm font-medium">
-                      Equipo: La startup tiene un buen equipo, con roles complementarios
+                      Calidad de la Ejecución (PoC) <span className="text-muted-foreground font-normal">— 30%</span>
                     </label>
                     <Select value={categoryA.toString()} onValueChange={(value) => setCategoryA(Number(value))}>
                       <SelectTrigger>
@@ -253,7 +239,7 @@ export const ScoringPanel = ({ projects, judges, scores, onUpdateScore }: Scorin
 
                   <div className="space-y-2">
                     <label className="text-sm font-medium">
-                      Métricas: Tiene cifras sanas y positivas
+                      Validación y Resultados <span className="text-muted-foreground font-normal">— 20%</span>
                     </label>
                     <Select value={categoryB.toString()} onValueChange={(value) => setCategoryB(Number(value))}>
                       <SelectTrigger>
@@ -271,7 +257,7 @@ export const ScoringPanel = ({ projects, judges, scores, onUpdateScore }: Scorin
 
                   <div className="space-y-2">
                     <label className="text-sm font-medium">
-                      Creatividad: Presentan una solución novedosa a un problema real
+                      Escalabilidad Técnica <span className="text-muted-foreground font-normal">— 10%</span>
                     </label>
                     <Select value={categoryC.toString()} onValueChange={(value) => setCategoryC(Number(value))}>
                       <SelectTrigger>
@@ -286,23 +272,36 @@ export const ScoringPanel = ({ projects, judges, scores, onUpdateScore }: Scorin
                       </SelectContent>
                     </Select>
                   </div>
+                </div>
 
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">
-                      Pitch: Sabe vender bien su idea
-                    </label>
-                    <Select value={categoryD.toString()} onValueChange={(value) => setCategoryD(Number(value))}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Selecciona puntaje" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {[1, 2, 3, 4, 5].map((value) => (
-                          <SelectItem key={value} value={value.toString()}>
-                            {value}. {renderValueLabel(value)}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                {/* Fixed (read-only) categories */}
+                <div className="border-t border-border/50 pt-4">
+                  <div className="flex items-center gap-2 mb-3 text-xs text-muted-foreground">
+                    <Lock className="h-3 w-3" />
+                    <span>Categorías fijas (definidas por los organizadores)</span>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-1">
+                      <label className="text-sm font-medium text-muted-foreground">
+                        Eficiencia de Recursos <span className="font-normal">— 10%</span>
+                      </label>
+                      <div className="flex items-center gap-2 px-3 py-2 rounded-md bg-muted/50 border border-border/50">
+                        <Lock className="h-3 w-3 text-muted-foreground" />
+                        <span className="font-semibold">{eficiencia}</span>
+                        <span className="text-xs text-muted-foreground">— {renderValueLabel(eficiencia)}</span>
+                      </div>
+                    </div>
+
+                    <div className="space-y-1">
+                      <label className="text-sm font-medium text-muted-foreground">
+                        Desempeño del Equipo <span className="font-normal">— 30%</span>
+                      </label>
+                      <div className="flex items-center gap-2 px-3 py-2 rounded-md bg-muted/50 border border-border/50">
+                        <Lock className="h-3 w-3 text-muted-foreground" />
+                        <span className="font-semibold">{desempeno}</span>
+                        <span className="text-xs text-muted-foreground">— {renderValueLabel(desempeno)}</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -317,25 +316,6 @@ export const ScoringPanel = ({ projects, judges, scores, onUpdateScore }: Scorin
                     className="min-h-[100px]"
                   />
                 </div>
-
-                {/* <div className="flex items-start mt-2 space-x-2 p-4 border rounded-lg">
-                  <Checkbox
-                    id="me-la-juego"
-                    checked={melaJuego}
-                    onCheckedChange={(checked) => setMelaJuego(checked === true)}
-                  />
-                  <div className="grid gap-1.5 leading-none">
-                    <label
-                      htmlFor="me-la-juego"
-                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 flex items-center gap-2"
-                    >
-                      Me la juego por este proyecto (opcional)
-                    </label>
-                    <p className="text-xs text-muted-foreground">
-                      Marca esta opción si consideras que este proyecto tiene excepcional potencial
-                    </p>
-                  </div>
-                </div> */}
               </div>
 
               <div className="flex flex-col md:flex-row gap-4">

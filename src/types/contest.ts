@@ -9,6 +9,8 @@ export interface Project {
   tags?: string[];
   submissionDate: string;
   weight: number;
+  eficienciaRecursos: number;
+  desempenoEquipo: number;
 }
 
 export interface Score {
@@ -17,7 +19,6 @@ export interface Score {
   categoryA: number;
   categoryB: number;
   categoryC: number;
-  categoryD: number;
   lastUpdated: string;
   comment?: string;
   melaJuego: boolean;
@@ -35,7 +36,6 @@ export interface ProjectScore {
   averageA: number;
   averageB: number;
   averageC: number;
-  averageD: number;
   totalAverage: number;
   rank: number;
   weight?: number;

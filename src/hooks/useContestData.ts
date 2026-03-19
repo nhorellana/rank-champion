@@ -35,7 +35,9 @@ export const useContestData = () => {
             ...p,
             proposedSolution: p.proposed_solution,
             submissionDate: p.submission_date,
-            weight: p.weight || 999
+            weight: p.weight || 999,
+            eficienciaRecursos: p.eficiencia_recursos ?? 3,
+            desempenoEquipo: p.desempeno_equipo ?? 3,
           }));
           // Sort by weight first (lower numbers = higher priority)
           setProjects(mappedProjects.sort((a, b) => a.weight - b.weight));
@@ -48,7 +50,6 @@ export const useContestData = () => {
             categoryA: s.category_a,
             categoryB: s.category_b,
             categoryC: s.category_c,
-            categoryD: s.category_d,
             lastUpdated: s.last_updated,
             comment: s.comment,
             melaJuego: s.me_la_juego || false,
@@ -90,7 +91,6 @@ export const useContestData = () => {
               categoryA: rawScore.category_a,
               categoryB: rawScore.category_b,
               categoryC: rawScore.category_c,
-              categoryD: rawScore.category_d,
               lastUpdated: rawScore.last_updated ?? new Date().toISOString(),
               comment: rawScore.comment,
               melaJuego: rawScore.me_la_juego || false,
@@ -130,7 +130,7 @@ export const useContestData = () => {
           category_a: updatedScore.categoryA,
           category_b: updatedScore.categoryB,
           category_c: updatedScore.categoryC,
-          category_d: updatedScore.categoryD,
+          category_d: 1,
           comment: updatedScore.comment,
           me_la_juego: updatedScore.melaJuego,
         }, {
@@ -172,18 +172,18 @@ export const useContestData = () => {
       const avgC = projectScores.length > 0
         ? projectScores.reduce((sum, s) => sum + s.categoryC, 0) / projectScores.length
         : 0;
-      const avgD = projectScores.length > 0
-        ? projectScores.reduce((sum, s) => sum + s.categoryD, 0) / projectScores.length
-        : 0;
 
-      const totalAverage = (avgA + avgB + avgC + avgD) / 4;
+      const eficiencia = project.eficienciaRecursos;
+      const desempeno = project.desempenoEquipo;
+
+      // Weighted formula: A×30% + B×20% + C×10% + eficiencia×10% + desempeno×30%
+      const totalAverage = (avgA * 30 + avgB * 20 + avgC * 10 + eficiencia * 10 + desempeno * 30) / 100;
 
       return {
         projectId: project.id,
         averageA: Number(avgA.toFixed(2)),
         averageB: Number(avgB.toFixed(2)),
         averageC: Number(avgC.toFixed(2)),
-        averageD: Number(avgD.toFixed(2)),
         totalAverage: Number(totalAverage.toFixed(2)),
         rank: 0, // Will be calculated after sorting
         weight: project.weight

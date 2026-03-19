@@ -23,26 +23,27 @@ export const LeaderboardChart = ({ projectScores, projects, judges, scores }: Le
 
     const personalScores = projects.map(project => {
       const score = judgeScores.find(s => s.projectId === project.id);
+      const eficiencia = project.eficienciaRecursos;
+      const desempeno = project.desempenoEquipo;
+
       if (!score) {
         return {
           projectId: project.id,
           averageA: 0,
           averageB: 0,
           averageC: 0,
-          averageD: 0,
           totalAverage: 0,
           rank: 0,
           weight: project.weight || 999
         };
       }
 
-      const total = (score.categoryA + score.categoryB + score.categoryC + score.categoryD) / 4;
+      const total = (score.categoryA * 30 + score.categoryB * 20 + score.categoryC * 10 + eficiencia * 10 + desempeno * 30) / 100;
       return {
         projectId: project.id,
         averageA: score.categoryA,
         averageB: score.categoryB,
         averageC: score.categoryC,
-        averageD: score.categoryD,
         totalAverage: Number(total.toFixed(1)),
         rank: 0,
         weight: project.weight || 999
@@ -52,6 +53,7 @@ export const LeaderboardChart = ({ projectScores, projects, judges, scores }: Le
       if (a.weight !== b.weight) {
         return a.weight - b.weight;
       }
+      return 0;
     });
 
     // Assign ranks
@@ -74,7 +76,6 @@ export const LeaderboardChart = ({ projectScores, projects, judges, scores }: Le
       categoryA: score.averageA,
       categoryB: score.averageB,
       categoryC: score.averageC,
-      categoryD: score.averageD,
       rank: score.rank,
       weight: score.weight
     };
@@ -135,22 +136,18 @@ export const LeaderboardChart = ({ projectScores, projects, judges, scores }: Le
                   </div>
                   <h3 className="font-semibold text-foreground mb-1">{project?.title}</h3>
                   <div className="text-2xl font-bold text-primary">{score.totalAverage} / 5</div>
-                  <div className="grid grid-cols-2 gap-1 mt-3 text-xs">
+                  <div className="grid grid-cols-3 gap-1 mt-3 text-xs">
                     <div className="text-center">
-                      <div className="text-muted-foreground">Equipo</div>
+                      <div className="text-muted-foreground">Calidad PoC</div>
                       <div className="font-semibold">{score.averageA}</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-muted-foreground">Métricas</div>
+                      <div className="text-muted-foreground">Validación</div>
                       <div className="font-semibold">{score.averageB}</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-muted-foreground">Creatividad</div>
+                      <div className="text-muted-foreground">Escalabilidad</div>
                       <div className="font-semibold">{score.averageC}</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-muted-foreground">Pitch</div>
-                      <div className="font-semibold">{score.averageD}</div>
                     </div>
                   </div>
                 </div>
@@ -211,10 +208,9 @@ export const LeaderboardChart = ({ projectScores, projects, judges, scores }: Le
                   }}
                 />
                 <Legend />
-                <Bar dataKey="categoryA" fill="hsl(var(--primary))" name="Equipo" />
-                <Bar dataKey="categoryB" fill="hsl(var(--innovation))" name="Métricas" />
-                <Bar dataKey="categoryC" fill="hsl(var(--innovation-tertiary))" name="Creatividad" />
-                <Bar dataKey="categoryD" fill="hsl(var(--success))" name="Pitch" />
+                <Bar dataKey="categoryA" fill="hsl(var(--primary))" name="Calidad PoC" />
+                <Bar dataKey="categoryB" fill="hsl(var(--innovation))" name="Validación" />
+                <Bar dataKey="categoryC" fill="hsl(var(--innovation-tertiary))" name="Escalabilidad" />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -261,22 +257,18 @@ export const LeaderboardChart = ({ projectScores, projects, judges, scores }: Le
                         <div className="text-lg font-bold text-primary">{score.totalAverage}</div>
                         <div className="text-xs text-muted-foreground">Promedio</div>
                       </div>
-                      <div className="grid grid-cols-4 gap-2 text-xs text-center">
+                      <div className="grid grid-cols-3 gap-2 text-xs text-center">
                         <div>
-                          <div className="text-muted-foreground">Equipo</div>
+                          <div className="text-muted-foreground">Calidad PoC</div>
                           <div className="font-semibold">{score.averageA}</div>
                         </div>
                         <div>
-                          <div className="text-muted-foreground">Métricas</div>
+                          <div className="text-muted-foreground">Validación</div>
                           <div className="font-semibold">{score.averageB}</div>
                         </div>
                         <div>
-                          <div className="text-muted-foreground">Creatividad</div>
+                          <div className="text-muted-foreground">Escalabilidad</div>
                           <div className="font-semibold">{score.averageC}</div>
-                        </div>
-                        <div>
-                          <div className="text-muted-foreground">Pitch</div>
-                          <div className="font-semibold">{score.averageD}</div>
                         </div>
                       </div>
                     </div>
@@ -298,22 +290,18 @@ export const LeaderboardChart = ({ projectScores, projects, judges, scores }: Le
                     </div>
 
                     {/* Row 2: Category Scores */}
-                    <div className="grid grid-cols-4 gap-2 text-xs text-center">
+                    <div className="grid grid-cols-3 gap-2 text-xs text-center">
                       <div>
-                        <div className="text-muted-foreground">Equipo</div>
+                        <div className="text-muted-foreground">Calidad PoC</div>
                         <div className="font-semibold">{score.averageA}</div>
                       </div>
                       <div>
-                        <div className="text-muted-foreground">Métricas</div>
+                        <div className="text-muted-foreground">Validación</div>
                         <div className="font-semibold">{score.averageB}</div>
                       </div>
                       <div>
-                        <div className="text-muted-foreground">Creatividad</div>
+                        <div className="text-muted-foreground">Escalabilidad</div>
                         <div className="font-semibold">{score.averageC}</div>
-                      </div>
-                      <div>
-                        <div className="text-muted-foreground">Pitch</div>
-                        <div className="font-semibold">{score.averageD}</div>
                       </div>
                     </div>
                   </div>

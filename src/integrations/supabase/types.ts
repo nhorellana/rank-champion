@@ -43,6 +43,8 @@ export type Database = {
           category: string | null
           created_at: string | null
           description: string
+          desempeno_equipo: number
+          eficiencia_recursos: number
           id: string
           problem: string | null
           proposed_solution: string
@@ -56,6 +58,8 @@ export type Database = {
           category?: string | null
           created_at?: string | null
           description: string
+          desempeno_equipo?: number
+          eficiencia_recursos?: number
           id?: string
           problem?: string | null
           proposed_solution: string
@@ -69,6 +73,8 @@ export type Database = {
           category?: string | null
           created_at?: string | null
           description?: string
+          desempeno_equipo?: number
+          eficiencia_recursos?: number
           id?: string
           problem?: string | null
           proposed_solution?: string
