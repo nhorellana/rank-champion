@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ProjectScore, Project, Judge, Score } from "@/types/contest";
 import { Trophy, TrendingUp, Award, Star, Lock } from "lucide-react";
-import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
+import { ResponsiveContainer, ComposedChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
 import { useState } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
@@ -76,6 +76,8 @@ export const LeaderboardChart = ({ projectScores, projects, judges, scores }: Le
       categoryA: score.averageA,
       categoryB: score.averageB,
       categoryC: score.averageC,
+      eficiencia: project?.eficienciaRecursos ?? 3,
+      desempeno: project?.desempenoEquipo ?? 3,
       rank: score.rank,
       weight: score.weight
     };
@@ -190,7 +192,7 @@ export const LeaderboardChart = ({ projectScores, projects, judges, scores }: Le
         <CardContent>
           <div className="h-96">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={chartData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+              <ComposedChart data={chartData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
                 <XAxis
                   dataKey="name"
@@ -211,7 +213,9 @@ export const LeaderboardChart = ({ projectScores, projects, judges, scores }: Le
                 <Bar dataKey="categoryA" fill="hsl(var(--primary))" name="Calidad PoC" />
                 <Bar dataKey="categoryB" fill="hsl(var(--innovation))" name="Validación" />
                 <Bar dataKey="categoryC" fill="hsl(var(--innovation-tertiary))" name="Escalabilidad" />
-              </BarChart>
+                <Bar dataKey="eficiencia" fill="#94a3b8" name="Eficiencia Recursos" />
+                <Bar dataKey="desempeno" fill="#64748b" name="Desempeño Equipo" />
+              </ComposedChart>
             </ResponsiveContainer>
           </div>
         </CardContent>

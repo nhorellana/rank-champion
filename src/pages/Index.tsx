@@ -55,11 +55,7 @@ const Index = () => {
       {/* Header */}
       <div className="border-b border-border/50 bg-card/30 backdrop-blur-sm sticky top-0 z-10">
         <div className="container mx-auto px-6 md:py-4">
-          <div className="flex md:hidden items-center justify-center">
-            <img src="/logos-juntos.png" alt="Copec" className="w-52" />
-          </div>
-          <div className="hidden md:flex items-center justify-between">
-            <img src="/logo_df_mas_pitch_negro.svg" alt="DF Más Pitch" className="w-24" />
+          <div className="flex items-center justify-center py-2">
             <img src="/logo-copec.png" alt="Copec" className="w-40" />
           </div>
         </div>
